@@ -15,7 +15,7 @@ import java.util.Scanner;
  * @version base
  */
 
-public class Comando {
+public class Comandoa {
 
     private String nome;
     private String parametro;
