@@ -1,4 +1,7 @@
 import static org.junit.jupiter.api.Assertions.*;
+
+import it.uniroma3.diadia.Partita;
+import it.uniroma3.diadia.ambienti.Stanza;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -23,13 +26,13 @@ class PartitaTest {
     @Test
     void test_win_true() {
         partita.setStanzaCorrente(partita.getStanzaVincente());
-        assertTrue(partita.vinta(), "Stanza vincente: vinta() deve essere true.");
+        assertTrue(partita.vinta(), "it.uniroma3.diadia.ambienti.Stanza vincente: vinta() deve essere true.");
     }
 
     @Test
     void test_win_false() {
         partita.setStanzaCorrente(stanzaTest);
-        assertFalse(partita.vinta(), "Stanza ordinaria: vinta() deve essere false.");
+        assertFalse(partita.vinta(), "it.uniroma3.diadia.ambienti.Stanza ordinaria: vinta() deve essere false.");
     }
 
     /* TEST ISFINITA */
@@ -43,7 +46,7 @@ class PartitaTest {
     @Test
     void test_isFinita_vittoria() {
         partita.setStanzaCorrente(partita.getStanzaVincente());
-        assertTrue(partita.isFinita(), "Partita vinta: isFinita() deve essere true.");
+        assertTrue(partita.isFinita(), "it.uniroma3.diadia.Partita vinta: isFinita() deve essere true.");
     }
 
     @Test
@@ -68,6 +71,6 @@ class PartitaTest {
 
     @Test
     void test_getStanzaVincente() {
-        assertNotNull(partita.getStanzaVincente(), "Stanza vincente non inizializzata.");
+        assertNotNull(partita.getStanzaVincente(), "it.uniroma3.diadia.ambienti.Stanza vincente non inizializzata.");
     }
 }
