@@ -1,16 +1,6 @@
-# Compiled class file
+# --- Compilazione e Package ---
 *.class
-
-# Log file
 *.log
-
-# BlueJ files
-*.ctxt
-
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-
-# Package Files #
 *.jar
 *.war
 *.nar
@@ -18,11 +8,37 @@
 *.zip
 *.tar.gz
 *.rar
-
-# Workflow
-github_workflow.sh
-github_workflow.bat
-
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
+
+# --- Specifici per IntelliJ IDEA ---
+# Escludiamo la cartella .idea che contiene le impostazioni locali dell'utente
+.idea/
+*.iml
+*.ipr
+*.iws
+# Se usi il plugin JRebel
+out/
+
+# --- Specifici per Eclipse ---
+# Escludiamo i file di progetto e le impostazioni di Eclipse
+.settings/
+.project
+.classpath
+.factorypath
+
+# --- Build Tools (Maven/Gradle) ---
+# Fondamentale per non caricare i file generati durante la build
+target/
+bin/
+build/
+.gradle/
+.idea\
+
+# --- Workflow e File Temporanei ---
+github_workflow.sh
+github_workflow.bat
+2026-HOMEWORKA-582304-610976.iml
+.mtj.tmp/
+*.ctxt
+.DS_Store
