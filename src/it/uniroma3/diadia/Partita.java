@@ -23,8 +23,9 @@ public class Partita {
 	
 	public Partita(){
 		labirinto = new Labirinto();
-		this.finita = false;
+		stanzaCorrente = labirinto.getStanzaIniziale();
 		player = new Giocatore();
+		this.finita = false;
 	}
 
 	public Stanza getStanzaVincente() {
