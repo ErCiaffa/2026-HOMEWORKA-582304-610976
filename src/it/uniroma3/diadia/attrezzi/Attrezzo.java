@@ -1,6 +1,6 @@
+package it.uniroma3.diadia.attrezzi;
 
-
-
+import it.uniroma3.diadia.ambienti.Stanza;
 
 /**
  * Una semplice classe che modella un attrezzo.

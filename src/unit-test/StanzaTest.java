@@ -1,5 +1,7 @@
 import static org.junit.jupiter.api.Assertions.*;
 
+import it.uniroma3.diadia.ambienti.Stanza;
+import it.uniroma3.diadia.attrezzi.Attrezzo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -47,7 +49,7 @@ public class StanzaTest {
 	void test_getStanzaAdiacente() {
 		n11.impostaStanzaAdiacente("SUD", n12);
 		assertEquals(n12,n11.getStanzaAdiacente("SUD"));
-		assertEquals(null,n10.getStanzaAdiacente("EAST"));
+		assertNull(n10.getStanzaAdiacente("EAST"));
 	}
 
 	/* --- TEST ATTREZZI --- */

@@ -1,4 +1,6 @@
+package it.uniroma3.diadia;
 
+import it.uniroma3.diadia.ambienti.Stanza;
 
 import java.util.Scanner;
 
@@ -62,7 +64,7 @@ public class DiaDia {
 		else if (comandoDaEseguire.getNome().equals("aiuto"))
 			this.aiuto();
 		else
-			System.out.println("Comando sconosciuto");
+			System.out.println("it.uniroma3.diadia.Comando sconosciuto");
 		if (this.partita.vinta()) {
 			System.out.println("Hai vinto!");
 			return true;
@@ -101,7 +103,7 @@ public class DiaDia {
 	}
 
 	/**
-	 * Comando "Fine".
+	 * it.uniroma3.diadia.Comando "Fine".
 	 */
 	private void fine() {
 		System.out.println("Grazie di aver giocato!");  // si desidera smettere
