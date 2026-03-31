@@ -36,6 +36,7 @@ build/
 .idea\
 
 # --- Workflow e File Temporanei ---
+lazygit.exe
 github_workflow.sh
 github_workflow.bat
 2026-HOMEWORKA-582304-610976.iml
