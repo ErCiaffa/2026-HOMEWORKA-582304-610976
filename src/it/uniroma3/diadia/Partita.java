@@ -3,14 +3,14 @@ package it.uniroma3.diadia;
 import it.uniroma3.diadia.ambienti.Stanza;
 import it.uniroma3.diadia.ambienti.Labirinto;
 import it.uniroma3.diadia.attrezzi.Attrezzo;
+import it.uniroma3.diadia.giocatore.Giocatore;
 
 
 /**
  * Questa classe modella una partita del gioco
  *
- * @author  docente di POO
- * @see Stanza
- * @version base
+ * @author Renda & Ciaffaroni
+ * @version 1.2
  */
 
 public class Partita {
@@ -19,13 +19,12 @@ public class Partita {
 	private Stanza stanzaCorrente;
 	
 	private boolean finita;
-	static final private int CFU_INIZIALI = 20;
-	private int cfu;
+	final Giocatore player;
 	
 	public Partita(){
 		labirinto = new Labirinto();
 		this.finita = false;
-		this.cfu = CFU_INIZIALI;
+		player = new Giocatore();
 	}
 
 	public Stanza getStanzaVincente() {
@@ -41,7 +40,7 @@ public class Partita {
 	}
 	
 	/**
-	 * Restituisce vero se e solo se la partita e' stata vinta
+	 * Restituisce vero se e solo se la partita è stata vinta
 	 * @return vero se partita vinta
 	 */
 	public boolean vinta() {
@@ -49,11 +48,11 @@ public class Partita {
 	}
 
 	/**
-	 * Restituisce vero se e solo se la partita e' finita
+	 * Restituisce vero se e solo se la partita è finita
 	 * @return vero se partita finita
 	 */
 	public boolean isFinita() {
-		return finita || vinta() || (cfu <= 0);
+		return finita || vinta() || (player.getCfu() <= 0);
 	}
 
 	/**
@@ -65,10 +64,10 @@ public class Partita {
 	}
 
 	public int getCfu() {
-		return this.cfu;
+		return player.getCfu();
 	}
 
 	public void setCfu(int cfu) {
-		this.cfu = cfu;		
-	}	
+		player.setCfu(cfu);
+	}
 }
