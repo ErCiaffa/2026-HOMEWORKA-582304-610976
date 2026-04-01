@@ -14,6 +14,7 @@ public class Giocatore {
         this.cfu = CFU_INIZIALI;
         inventory = new Borsa();
     }
+    
     public int getCfu() {
         return this.cfu;
     }
@@ -27,21 +28,27 @@ public class Giocatore {
             return false;
         return inventory.addAttrezzo(attrezzo);
     }
+    
     public Attrezzo removeAttrezzo(String nomeAttrezzo) {
         return inventory.removeAttrezzo(nomeAttrezzo);
     }
+    
     public Attrezzo getAttrezzo(String nomeAttrezzo) {
         return inventory.getAttrezzo(nomeAttrezzo);
     }
+    
     public int getPesoMax(){
         return inventory.getPesoMax();
     }
+    
     public boolean hasAttrezzo(String nomeAttrezzo) {
         return inventory.hasAttrezzo(nomeAttrezzo);
     }
+    
     public boolean isEmpty(){
         return inventory.isEmpty();
     }
+    
     public String printInventory(){
         return inventory.toString();
     }
