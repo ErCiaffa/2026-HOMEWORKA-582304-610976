@@ -1,6 +1,7 @@
 package it.uniroma3.diadia;
 
 import it.uniroma3.diadia.ambienti.Stanza;
+import it.uniroma3.diadia.attrezzi.Attrezzo;
 
 import java.util.Scanner;
 
@@ -28,7 +29,7 @@ public class DiaDia {
 			"o regalarli se pensi che possano ingraziarti qualcuno.\n\n"+
 			"Per conoscere le istruzioni usa il comando 'aiuto'.";
 	
-	static final private String[] elencoComandi = {"vai", "aiuto", "fine"};
+	static final private String[] elencoComandi = {"vai", "aiuto", "fine", "prendi", "posa"};
 
 	private Partita partita;
 
@@ -67,6 +68,10 @@ public class DiaDia {
 			this.vai(comandoDaEseguire.getParametro());
 		else if (comandoDaEseguire.getNome().equals("aiuto"))
 			this.aiuto();
+		else if(comandoDaEseguire.getNome().equals("prendi"))
+			this.partita.prendi(comandoDaEseguire.getParametro());
+		else if(comandoDaEseguire.getNome().equals("posa"))
+			this.partita.posa(comandoDaEseguire.getParametro());
 		else
 			System.out.println("it.uniroma3.diadia.Comando sconosciuto");
 		if (this.partita.vinta()) {
@@ -74,10 +79,12 @@ public class DiaDia {
 			return true;
 		} else
 			return false;
-	}   
+	} 
+	
+	
 
 	// implementazioni dei comandi dell'utente:
-
+	
 	/**
 	 * Stampa informazioni di aiuto.
 	 */
