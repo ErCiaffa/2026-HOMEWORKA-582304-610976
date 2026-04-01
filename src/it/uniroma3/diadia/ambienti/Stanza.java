@@ -20,7 +20,6 @@ public class Stanza {
 	static final private int NUMERO_MASSIMO_ATTREZZI = 10;
 	
 	private String nome;
-	
     private Attrezzo[] attrezzi;
     private int numeroAttrezzi;
     
@@ -129,7 +128,8 @@ public class Stanza {
     			risultato.append(" " + direzione);
     	risultato.append("\nAttrezzi nella stanza: ");
     	for (Attrezzo attrezzo : this.attrezzi) {
-    		risultato.append(attrezzo.toString()+" ");
+			if(attrezzo != null)
+				risultato.append(attrezzo.toString()+" ");
     	}
     	return risultato.toString();
     }
