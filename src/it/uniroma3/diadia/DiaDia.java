@@ -54,6 +54,10 @@ public class DiaDia {
 	 * @return true se l'istruzione e' eseguita e il gioco continua, false altrimenti
 	 */
 	private boolean processaIstruzione(String istruzione) {
+		if (istruzione.isEmpty()) {
+			System.out.println("it.uniroma3.diadia.Comando non inserito");
+			return false;
+		}
 		Comando comandoDaEseguire = new Comando(istruzione);
 
 		if (comandoDaEseguire.getNome().equals("fine")) {
@@ -99,7 +103,7 @@ public class DiaDia {
 			int cfu = this.partita.getCfu();
 			this.partita.setCfu(cfu--);
 		}
-		System.out.println(partita.getStanzaCorrente().getDescrizione());
+		System.out.println("Stanza Corrente:"+ partita.getStanzaCorrente().getDescrizione());
 	}
 
 	/**
