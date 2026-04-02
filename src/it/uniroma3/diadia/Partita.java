@@ -22,9 +22,9 @@ public class Partita {
 	final Giocatore player;
 	
 	public Partita(){
-		labirinto = new Labirinto();
-		stanzaCorrente = labirinto.getStanzaIniziale();
-		player = new Giocatore();
+		this.labirinto = new Labirinto();
+		this.stanzaCorrente = labirinto.getStanzaIniziale();
+		this.player = new Giocatore();
 		this.finita = false;
 	}
 
@@ -72,41 +72,4 @@ public class Partita {
 		player.setCfu(cfu);
 	}
 
-	public void prendi(String nomeAttrezzo) {
-		if(nomeAttrezzo==null) {
-			System.out.println("Cosa vuoi prendere?");
-			return;
-		}
-		Attrezzo attrezzo = this.stanzaCorrente.getAttrezzo(nomeAttrezzo);
-		if(attrezzo!=null) {
-			boolean aggiunto = this.player.addAttrezzo(attrezzo);
-			if(aggiunto) {
-				this.stanzaCorrente.removeAttrezzo(attrezzo);
-				System.out.println("Hai preso: " + nomeAttrezzo);
-			}
-			else
-				System.out.println("Borsa piena o limite attrezzi raggiunto");
-		}
-		else
-			System.out.println("L'attrezzo " + nomeAttrezzo + " non è in questa stanza");	
-	}
-	
-	public void posa(String nomeAttrezzo) {
-		if(nomeAttrezzo==null) {
-			System.out.println("Cosa vuoi posare?");
-			return;
-		}
-		Attrezzo attrezzo = this.player.getAttrezzo(nomeAttrezzo);
-		if(attrezzo!=null) {
-			boolean aggiunto = this.stanzaCorrente.addAttrezzo(attrezzo);
-			if(aggiunto) {
-				this.player.removeAttrezzo(nomeAttrezzo);
-				System.out.println("Hai posato: " + nomeAttrezzo);
-			}
-			else
-				System.out.println("Stanza piena");
-		}
-		else
-			System.out.println("Il giocatore non possiede l'attrezzo " + nomeAttrezzo);
-	}
 }
