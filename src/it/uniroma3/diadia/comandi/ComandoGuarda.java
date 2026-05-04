@@ -8,7 +8,7 @@ public class ComandoGuarda implements Comando {
     public void esegui(Partita partita) {
     	partita.getIO().mostraMessaggio(partita.getStanzaCorrente().getDescrizione());
     	if (partita.giocatoreIsVivo()) {
-    		partita.getIO().mostraMessaggio("Il giocatore è vivo ed ha " + partita.getCfu());
+    		partita.getIO().mostraMessaggio("Il giocatore è vivo ed ha " + partita.getCfu() + "CFU");
     		partita.getIO().mostraMessaggio("Inventario:\n" + partita.getBorsa());
     	} else {
     		partita.getIO().mostraMessaggio("Il giocatore ha perso!");
