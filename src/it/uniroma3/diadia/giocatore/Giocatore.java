@@ -9,10 +9,10 @@ public class Giocatore {
 
     static final private int CFU_INIZIALI = 20;
     private int cfu;
-    final Borsa inventory;
+    final Borsa borsa;
     public Giocatore (){
         this.cfu = CFU_INIZIALI;
-        inventory = new Borsa();
+        this.borsa = new Borsa();
     }
     
     public int getCfu() {
@@ -26,30 +26,34 @@ public class Giocatore {
     public boolean addAttrezzo(Attrezzo attrezzo) {
         if (attrezzo == null)
             return false;
-        return inventory.addAttrezzo(attrezzo);
+        return this.borsa.addAttrezzo(attrezzo);
     }
     
     public Attrezzo removeAttrezzo(String nomeAttrezzo) {
-        return inventory.removeAttrezzo(nomeAttrezzo);
+        return this.borsa.removeAttrezzo(nomeAttrezzo);
     }
     
     public Attrezzo getAttrezzo(String nomeAttrezzo) {
-        return inventory.getAttrezzo(nomeAttrezzo);
+        return this.borsa.getAttrezzo(nomeAttrezzo);
     }
     
     public int getPesoMax(){
-        return inventory.getPesoMax();
+        return this.borsa.getPesoMax();
     }
     
     public boolean hasAttrezzo(String nomeAttrezzo) {
-        return inventory.hasAttrezzo(nomeAttrezzo);
+        return this.borsa.hasAttrezzo(nomeAttrezzo);
     }
     
     public boolean isEmpty(){
-        return inventory.isEmpty();
+        return this.borsa.isEmpty();
     }
     
     public String printInventory(){
-        return inventory.toString();
+        return this.borsa.toString();
+    }
+    
+    public Borsa getBorsa() {
+    	return this.borsa;
     }
 }
