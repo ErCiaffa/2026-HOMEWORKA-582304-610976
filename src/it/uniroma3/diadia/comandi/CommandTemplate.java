@@ -4,7 +4,6 @@ import it.uniroma3.diadia.Partita;
 
 public class CommandTemplate implements Comando {
     private String param;
-    private String nome;
     @Override
     public void esegui(Partita partita) {}
     @Override
@@ -17,7 +16,7 @@ public class CommandTemplate implements Comando {
     }
     @Override
     public String getNome() {
-        return this.nome;
+        return "Nome";
     }
 }
 
