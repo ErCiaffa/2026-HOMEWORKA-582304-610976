@@ -15,7 +15,7 @@ import it.uniroma3.diadia.comandi.FabbricaDiComandiFisarmonica;
  * @author  docente di POO, Ciaffaroni Alessio, Davide Renda
  *         (da un'idea di Michael Kolling and David J. Barnes) 
  *          
- * @version base
+ * @version base test
  */
 
 public class DiaDia {
