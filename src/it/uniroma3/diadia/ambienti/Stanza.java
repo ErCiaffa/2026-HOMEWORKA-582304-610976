@@ -20,8 +20,8 @@ public class Stanza {
 	static final private int NUMERO_MASSIMO_ATTREZZI = 10;
 	
 	private String nome;
-    private Attrezzo[] attrezzi;
-    private int numeroAttrezzi;
+    protected Attrezzo[] attrezzi;
+	protected int numeroAttrezzi;
     
     private Stanza[] stanzeAdiacenti;
     private int numeroStanzeAdiacenti;
@@ -121,7 +121,7 @@ public class Stanza {
 	*/
     public String toString() {
     	StringBuilder risultato = new StringBuilder();
-    	risultato.append(this.nome);
+    	risultato.append("Stanza: "+this.nome);
     	risultato.append("\nUscite: ");
     	for (String direzione : this.direzioni)
     		if (direzione!=null)
