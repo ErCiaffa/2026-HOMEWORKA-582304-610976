@@ -1,8 +1,9 @@
 package it.uniroma3.diadia;
 
-import it.uniroma3.diadia.ambienti.Stanza;
 import it.uniroma3.diadia.attrezzi.Attrezzo;
-import it.uniroma3.diadia.IOConsole;
+import it.uniroma3.diadia.comandi.Comando;
+import it.uniroma3.diadia.comandi.FabbricaDiComandi;
+import it.uniroma3.diadia.comandi.FabbricaDiComandiFisarmonica;
 
 /**
  * Classe principale di diadia, un semplice gioco di ruolo ambientato al dia.
@@ -52,33 +53,21 @@ public class DiaDia {
 	 *
 	 * @return true se l'istruzione è eseguita e il gioco continua, false altrimenti
 	 */
-	private boolean processaIstruzione(String istruzione) {
-		if (istruzione.isEmpty()) {
-			console.mostraMessaggio("it.uniroma3.diadia.Comando - comando vuoto");
-			return false;
-		}
-		Comando comandoDaEseguire = new Comando(istruzione);
 
-		if (comandoDaEseguire.getNome().equals("fine")) {
-			this.fine(); 
-			return true;
-		} else if (comandoDaEseguire.getNome().equals("vai"))
-			this.vai(comandoDaEseguire.getParametro());
-		else if (comandoDaEseguire.getNome().equals("aiuto"))
-			this.aiuto();
-		else if(comandoDaEseguire.getNome().equals("prendi"))
-			this.prendi(comandoDaEseguire.getParametro());
-		else if(comandoDaEseguire.getNome().equals("posa"))
-			this.posa(comandoDaEseguire.getParametro());
-		else
-			console.mostraMessaggio("it.uniroma3.diadia.Comando - comando sconosciuto");
-		if (this.partita.vinta()) {
-			console.mostraMessaggio("#Game - Hai vinto!");
-			return true;
-		} else
-			return false;
-	} 
-	
+	private boolean processaIstruzione(String vai) {
+		Comando comandoDaEseguire;
+		FabbricaDiComandi factory = new FabbricaDiComandiFisarmonica();
+		comandoDaEseguire = factory.costruisciComando(istruzione);
+		Comandovai.esegui(this.partita);
+		if (this.partita.vinta())
+
+			console.mostraMessaggio("Hai vinto!");
+		if (!this.partita.giocatoreIsVivo())
+
+			console.mostraMessaggio("Hai esaurito i CFU...");
+
+		return this.partita.isFinita();
+	}
 	
 
 	// implementazioni dei comandi dell'utente:
@@ -92,24 +81,7 @@ public class DiaDia {
 			console.mostraMessaggio((i+1)+"- "+elencoComandi[i]+" ");
 	}
 
-	/**
-	 * Cerca di andare in una direzione. Se c'e' una stanza ci entra 
-	 * e ne stampa il nome, altrimenti stampa un messaggio di errore
-	 */
-	private void vai(String direzione) {
-		if(direzione==null)
-			console.mostraMessaggio("#Game - Dove vuoi andare ?");
-		Stanza prossimaStanza = null;
-		prossimaStanza = this.partita.getStanzaCorrente().getStanzaAdiacente(direzione);
-		if (prossimaStanza == null)
-			console.mostraMessaggio("Direzione inesistente");
-		else {
-			this.partita.setStanzaCorrente(prossimaStanza);
-			int cfu = this.partita.getCfu();
-			this.partita.setCfu(cfu--);
-		}
-		console.mostraMessaggio("Stanza Corrente: "+ partita.getStanzaCorrente().getDescrizione());
-	}
+
 	public void prendi(String nomeAttrezzo) {
 		if(nomeAttrezzo==null) {
 			console.mostraMessaggio("Cosa vuoi prendere?");
@@ -148,7 +120,7 @@ public class DiaDia {
 			console.mostraMessaggio("Il giocatore non possiede l'attrezzo " + nomeAttrezzo);
 	}
 	/**
-	 * it.uniroma3.diadia.Comando "Fine".
+	 * it.uniroma3.diadia.comando.Comando "Fine".
 	 */
 	private void fine() {
 		console.mostraMessaggio("#Game - Grazie di aver giocato! (fine)");  // si desidera smettere
