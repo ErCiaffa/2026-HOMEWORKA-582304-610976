@@ -1,6 +1,8 @@
 import static org.junit.jupiter.api.Assertions.*;
 
+import it.uniroma3.diadia.IO;
 import it.uniroma3.diadia.Partita;
+import it.uniroma3.diadia.ambienti.Labirinto;
 import it.uniroma3.diadia.ambienti.Stanza;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -13,7 +15,7 @@ class PartitaTest {
 
     @BeforeEach
     void setUp() {
-        this.partita = new Partita();
+        this.partita = new Partita(Labirinto labirinto, IO io);
         this.stanzaTest = new Stanza("Test");
     }
 
