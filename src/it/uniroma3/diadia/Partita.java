@@ -3,6 +3,7 @@ package it.uniroma3.diadia;
 import it.uniroma3.diadia.ambienti.Stanza;
 import it.uniroma3.diadia.attrezzi.Attrezzo;
 import it.uniroma3.diadia.ambienti.Labirinto;
+import it.uniroma3.diadia.giocatore.Borsa;
 import it.uniroma3.diadia.giocatore.Giocatore;
 
 
@@ -27,7 +28,6 @@ public class Partita {
 		this.player = new Giocatore();
 		this.finita = false;
 	}
-	public getIO() { return this.io; }
 
 	public Stanza getStanzaVincente() {
 		return labirinto.getStanzaVincente();
@@ -62,5 +62,9 @@ public class Partita {
 	public void setCfu(int cfu) {
 		player.setCfu(cfu);
 	}
-
+	
+	public Borsa getBorsa() {
+		return player.getBorsa();
+	}
+	
 }
