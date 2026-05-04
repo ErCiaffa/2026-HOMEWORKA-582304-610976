@@ -9,7 +9,7 @@ public class Borsa {
     /**
      * Questa classe modella una l'invetario del giocatore.
      * @author Ciaffaroni
-     * @version 1.0
+     * @version 1.1
      */
     public final static int DEFAULT_PESO_MAX_BORSA = 10;
     private Attrezzo[] attrezzi;
@@ -29,7 +29,7 @@ public class Borsa {
     public boolean addAttrezzo(Attrezzo attrezzo) {
         if (this.getPeso() + attrezzo.getPeso() > this.getPesoMax())
             return false;
-        if (this.numeroAttrezzi==10)
+        if (this.numeroAttrezzi == this.attrezzi.length)
             return false;
         if(attrezzo.getPeso()<0)
         	return false;
