@@ -1,5 +1,6 @@
 package it.uniroma3.diadia;
 
+import it.uniroma3.diadia.ambienti.Labirinto;
 import it.uniroma3.diadia.attrezzi.Attrezzo;
 import it.uniroma3.diadia.comandi.Comando;
 import it.uniroma3.diadia.comandi.FabbricaDiComandi;
@@ -32,21 +33,23 @@ public class DiaDia {
 	static final private String[] elencoComandi = {"vai", "aiuto", "fine", "prendi", "posa"};
 
 	private Partita partita;
-	private IOConsole console;
-	public DiaDia(IOConsole console) {
-		this.console = console;
-		this.partita = new Partita();
+	private Labirinto labirinto;
+	private IO io;
+
+	public DiaDia(IO io) {
+		this.io=io;
+		this.labirinto = new Labirinto();
+		this.partita = new Partita(labirinto,io);
 	}
 
 	public void gioca() {
 		String istruzione;
 
-		console.mostraMessaggio(MESSAGGIO_BENVENUTO);
+		io.mostraMessaggio(MESSAGGIO_BENVENUTO);
 		do		
-			istruzione = console.leggiRiga();
+			istruzione = io.leggiRiga();
 		while (!processaIstruzione(istruzione));
-	}   
-
+	}
 
 	/**
 	 * Processa una istruzione 
@@ -54,81 +57,24 @@ public class DiaDia {
 	 * @return true se l'istruzione è eseguita e il gioco continua, false altrimenti
 	 */
 
-	private boolean processaIstruzione(String vai) {
+	private boolean processaIstruzione(String istruzione) {
 		Comando comandoDaEseguire;
 		FabbricaDiComandi factory = new FabbricaDiComandiFisarmonica();
 		comandoDaEseguire = factory.costruisciComando(istruzione);
-		Comandovai.esegui(this.partita);
+		comandoDaEseguire.esegui(this.partita);
 		if (this.partita.vinta())
 
-			console.mostraMessaggio("Hai vinto!");
+			io.mostraMessaggio("Hai vinto!");
 		if (!this.partita.giocatoreIsVivo())
 
-			console.mostraMessaggio("Hai esaurito i CFU...");
+			io.mostraMessaggio("Hai esaurito i CFU...");
 
 		return this.partita.isFinita();
 	}
-	
-
-	// implementazioni dei comandi dell'utente:
-	
-	/**
-	 * Stampa informazioni di aiuto.
-	 */
-	private void aiuto() {
-		console.mostraMessaggio("# Lista Comandi #");
-		for(int i=0; i< elencoComandi.length; i++)
-			console.mostraMessaggio((i+1)+"- "+elencoComandi[i]+" ");
-	}
-
-
-	public void prendi(String nomeAttrezzo) {
-		if(nomeAttrezzo==null) {
-			console.mostraMessaggio("Cosa vuoi prendere?");
-			return;
-		}
-		Attrezzo attrezzo = partita.getStanzaCorrente().getAttrezzo(nomeAttrezzo);
-		if(attrezzo!=null) {
-			boolean aggiunto = partita.player.addAttrezzo(attrezzo);
-			if(aggiunto) {
-				partita.getStanzaCorrente().removeAttrezzo(attrezzo);
-				console.mostraMessaggio("Hai preso: " + nomeAttrezzo);
-			}
-			else
-				console.mostraMessaggio("Borsa piena o limite attrezzi raggiunto");
-		}
-		else
-			console.mostraMessaggio("L'attrezzo " + nomeAttrezzo + " non è in questa stanza");
-	}
-
-	public void posa(String nomeAttrezzo) {
-		if(nomeAttrezzo==null) {
-			console.mostraMessaggio("Cosa vuoi posare?");
-			return;
-		}
-		Attrezzo attrezzo = partita.player.getAttrezzo(nomeAttrezzo);
-		if(attrezzo!=null) {
-			boolean aggiunto = partita.getStanzaCorrente().addAttrezzo(attrezzo);
-			if(aggiunto) {
-				partita.player.removeAttrezzo(nomeAttrezzo);
-				console.mostraMessaggio("Hai posato: " + nomeAttrezzo);
-			}
-			else
-				console.mostraMessaggio("Stanza piena");
-		}
-		else
-			console.mostraMessaggio("Il giocatore non possiede l'attrezzo " + nomeAttrezzo);
-	}
-	/**
-	 * it.uniroma3.diadia.comando.Comando "Fine".
-	 */
-	private void fine() {
-		console.mostraMessaggio("#Game - Grazie di aver giocato! (fine)");  // si desidera smettere
-	}
 
 	public static void main(String[] argc) {
-		IOConsole console = new IOConsole();
-		DiaDia gioco = new DiaDia(console);
+		IO io = new IOConsole();
+		DiaDia gioco = new DiaDia(io);
 		gioco.gioca();
 	}
 }
