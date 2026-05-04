@@ -10,19 +10,19 @@ import it.uniroma3.diadia.giocatore.Giocatore;
  * Questa classe modella una partita del gioco
  *
  * @author Renda & Ciaffaroni
- * @version 1.2
+ * @version 1.3
  */
 
 public class Partita {
 
 	private Labirinto labirinto;
 	private Stanza stanzaCorrente;
-	
+	private IO io;
 	private boolean finita;
 	final Giocatore player;
 	
-	public Partita(){
-		this.labirinto = new Labirinto();
+	public Partita(Labirinto labirinto,IO io){
+		this.labirinto = labirinto;
 		this.stanzaCorrente = labirinto.getStanzaIniziale();
 		this.player = new Giocatore();
 		this.finita = false;
@@ -39,27 +39,17 @@ public class Partita {
 	public Stanza getStanzaCorrente() {
 		return this.stanzaCorrente;
 	}
-	
-	/**
-	 * Restituisce vero se e solo se la partita è stata vinta
-	 * @return vero se partita vinta
-	 */
+
 	public boolean vinta() {
 		return this.getStanzaCorrente()== this.getStanzaVincente();
 	}
 
-	/**
-	 * Restituisce vero se e solo se la partita è finita
-	 * @return vero se partita finita
-	 */
 	public boolean isFinita() {
-		return finita || vinta() || (player.getCfu() <= 0);
+		return finita || vinta() || !giocatoreIsVivo();
 	}
 
-	/**
-	 * Imposta la partita come finita
-	 *
-	 */
+	public boolean giocatoreIsVivo() { return player.getCfu() > 0; }
+
 	public void setFinita() {
 		this.finita = true;
 	}

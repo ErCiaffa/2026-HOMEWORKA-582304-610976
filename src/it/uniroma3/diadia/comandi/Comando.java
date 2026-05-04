@@ -2,19 +2,6 @@ package it.uniroma3.diadia.comandi;
 
 import it.uniroma3.diadia.Partita;
 
-/**
- * Questa classe modella un comando.
- * Un comando consiste al piu' di due parole:
- * il nome del comando e un parametro
- * su cui si applica il comando.
- * (Ad es. Alla riga digitata dall'utente "vai nord"
- *  corrisponde un comando di nome "vai" e parametro "nord").
- *
- * @author  docente di POO
- * @version base
- */
-
-
 public interface Comando {
 
     /**
@@ -22,9 +9,23 @@ public interface Comando {
      */
     public void esegui(Partita partita);
 
+
     /**
      * set parametro del comando
      */
     public void setParametro(String parametro);
+
+
+    /**
+     * get parametro del comando
+     */
+    public String getParametro();
+
+
+    /**
+     * get nome del comando
+     */
+    public String getNome();
+
 
 }
