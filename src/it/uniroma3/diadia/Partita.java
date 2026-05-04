@@ -27,6 +27,11 @@ public class Partita {
 		this.stanzaCorrente = labirinto.getStanzaIniziale();
 		this.player = new Giocatore();
 		this.finita = false;
+		this.io = io;
+	}
+
+	public IO getIO() {
+		return io;
 	}
 
 	public Stanza getStanzaVincente() {
