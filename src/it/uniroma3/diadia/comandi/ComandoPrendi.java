@@ -10,6 +10,10 @@ public class ComandoPrendi implements Comando {
 	public ComandoPrendi(String nomeAttrezzo) {
 		this.nomeAttrezzo=nomeAttrezzo;
 	}
+
+	public ComandoPrendi() {
+		this(null);
+	}
 	
     @Override
     public void esegui(Partita partita) {
