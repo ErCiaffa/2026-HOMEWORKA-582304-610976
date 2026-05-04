@@ -33,5 +33,10 @@ public class ComandoVai implements Comando {
     public String getParametro() {
         return this.direzione;
     }
-    
+
+    @Override
+    public String getNome() {
+        return "vai";
+    }
+
 }
