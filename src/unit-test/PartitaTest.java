@@ -1,9 +1,11 @@
 import static org.junit.jupiter.api.Assertions.*;
 
 import it.uniroma3.diadia.IO;
+import it.uniroma3.diadia.IOConsole;
 import it.uniroma3.diadia.Partita;
 import it.uniroma3.diadia.ambienti.Labirinto;
 import it.uniroma3.diadia.ambienti.Stanza;
+import it.uniroma3.diadia.IO;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,11 +13,13 @@ import org.junit.jupiter.api.Test;
 class PartitaTest {
 
     private Partita partita;
+    private Labirinto labirinto;
     private Stanza stanzaTest;
-
+    private IO io;
     @BeforeEach
     void setUp() {
-        this.partita = new Partita(Labirinto labirinto, IO io);
+
+        this.partita = new Partita(new Labirinto(), new IOConsole());
         this.stanzaTest = new Stanza("Test");
     }
 
