@@ -31,4 +31,8 @@ public class StanzaMagica extends Stanza {
         int pesoDoppio = attrezzo.getPeso() * 2;
         return new Attrezzo(nomeInvertito, pesoDoppio);
     }
+
+    public boolean isMagica() {
+        return true;
+    }
 }
