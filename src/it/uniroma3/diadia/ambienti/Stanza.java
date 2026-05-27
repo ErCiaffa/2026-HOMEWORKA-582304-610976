@@ -6,6 +6,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.List;
+import java.util.Arrays;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import it.uniroma3.diadia.attrezzi.Attrezzo;
 
@@ -27,7 +30,7 @@ public class Stanza {
 	static final private int NUMERO_MASSIMO_ATTREZZI = 10;
 	
 	private String nome;
-    private Map<String,Attrezzo> attrezzi;
+    protected Map<String,Attrezzo> attrezzi;
 	protected int numeroAttrezzi;
     
     private Map<String,Stanza> stanzeAdiacenti;
@@ -116,15 +119,23 @@ public class Stanza {
     public String toString() {
     	StringBuilder risultato = new StringBuilder();
     	risultato.append("Stanza: "+this.nome);
-    	risultato.append("\nUscite: ");
-    	for (String direzione : this.direzioni)
-    		if (direzione!=null)
-    			risultato.append(" " + direzione);
-    	risultato.append("\nAttrezzi nella stanza: ");
-    	for (Attrezzo attrezzo : this.attrezzi.values()) {
-			if(attrezzo != null)
-				risultato.append(attrezzo.toString()+" ");
-    	}
+    	risultato.append("\nUscite: "+ this.stanzeAdiacenti.keySet().stream()
+                .collect(Collectors.joining(" ")));
+//    	for (String direzione : this.direzioni)
+//    		if (direzione!=null)
+//    			risultato.append(" " + direzione);
+        risultato.append("\nAttrezzi nella stanza: ");
+        if (this.attrezzi.isEmpty()){
+            risultato.append("Nessun Attrezzo");
+        } else {
+            risultato.append(this.attrezzi.values().stream()
+                    .map(Attrezzo::toString)
+                    .collect(Collectors.joining(" ")));
+        }
+//    	for (Attrezzo attrezzo : this.attrezzi.values()) {
+//			if(attrezzo != null)
+//				risultato.append(attrezzo.toString()+" ");
+//    	}
     	return risultato.toString();
     }
 
