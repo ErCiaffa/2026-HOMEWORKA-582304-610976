@@ -20,12 +20,19 @@ public class StanzaMagicaProtected extends StanzaProtected {
     }
 
     @Override
-	public boolean addAttrezzo(Attrezzo attrezzo) {
-		this.contatoreAttrezziPosati++; 
-		if (this.contatoreAttrezziPosati > this.sogliaMagica)
-			attrezzo = this.modificaAttrezzo(attrezzo);
-		return this.addAttrezzo(attrezzo);
-	}
+    public boolean addAttrezzo(Attrezzo attrezzo) {
+        if (attrezzo == null)
+            return false;
+
+        this.contatoreAttrezziPosati++;
+
+        // Se superiamo la soglia, modifichiamo l'attrezzo (inverte nome e raddoppia peso)
+        if (this.contatoreAttrezziPosati > this.sogliaMagica) {
+            attrezzo = this.modificaAttrezzo(attrezzo);
+        }
+
+        return super.addAttrezzo(attrezzo);
+    }
 
     private Attrezzo modificaAttrezzo(Attrezzo attrezzo) {
         String nomeInvertito = new StringBuilder(attrezzo.getNome()).reverse().toString();

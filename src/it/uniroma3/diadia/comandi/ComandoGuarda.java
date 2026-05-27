@@ -4,28 +4,59 @@ import it.uniroma3.diadia.Partita;
 
 public class ComandoGuarda implements Comando {
 
+    // 1. Aggiungiamo la variabile per salvare la seconda parola digitata dall'utente
+    private String parametro;
+
     @Override
     public void esegui(Partita partita) {
-    	partita.getIO().mostraMessaggio(partita.getStanzaCorrente().getDescrizione());
-    	if (partita.giocatoreIsVivo()) {
-    		partita.getIO().mostraMessaggio("Il giocatore è vivo ed ha " + partita.getCfu() + "CFU");
-    		partita.getIO().mostraMessaggio("Inventario:\n" + partita.getBorsa());
-    	} else {
-    		partita.getIO().mostraMessaggio("Il giocatore ha perso!");
-    	}
+        // Stampa sempre la descrizione della stanza
+        partita.getIO().mostraMessaggio(partita.getStanzaCorrente().getDescrizione());
+
+        if (partita.giocatoreIsVivo()) {
+            partita.getIO().mostraMessaggio("Il giocatore è vivo ed ha " + partita.getCfu() + " CFU");
+
+            // 2. Usiamo uno switch sul parametro per decidere cosa stampare
+            if (this.parametro == null) {
+                // Comando base: solo "guarda"
+                partita.getIO().mostraMessaggio("Inventario:\n" + partita.getBorsa().toString());
+            } else {
+                // Comando con parametro: "guarda peso", "guarda nome", ecc.
+                switch (this.parametro.toLowerCase()) {
+                    case "peso":
+                        partita.getIO().mostraMessaggio("Inventario (ordinato per peso):\n" + partita.getBorsa().getContenutoOrdinatoPerPeso());
+                        break;
+                    case "nome":
+                        partita.getIO().mostraMessaggio("Inventario (ordinato per nome):\n" + partita.getBorsa().getContenutoOrdinatoPerNome());
+                        break;
+                    case "gruppi":
+                        partita.getIO().mostraMessaggio("Inventario (raggruppato per peso):\n" + partita.getBorsa().getContenutoRaggruppatoPerPeso());
+                        break;
+                    default:
+                        // Se l'utente digita "guarda caso" o parole non previste
+                        partita.getIO().mostraMessaggio("Inventario:\n" + partita.getBorsa().toString());
+                        partita.getIO().mostraMessaggio("(Suggerimento: puoi usare 'guarda peso', 'guarda nome' o 'guarda gruppi')");
+                        break;
+                }
+            }
+
+        } else {
+            partita.getIO().mostraMessaggio("Il giocatore ha perso!");
+        }
     }
+
     @Override
     public void setParametro(String parametro) {
-
+        // 3. Ora salviamo il parametro invece di ignorarlo
+        this.parametro = parametro;
     }
+
     @Override
     public String getParametro() {
-        return null;
+        return this.parametro;
     }
+
     @Override
     public String getNome() {
-        return "Guarda";
+        return "guarda";
     }
 }
-
-
