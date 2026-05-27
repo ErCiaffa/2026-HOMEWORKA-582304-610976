@@ -12,7 +12,7 @@ public class StanzaBuia extends Stanza {
     @Override
     public String getDescrizione() {
         if (!this.hasAttrezzo(this.nomeAttrezzoNecessario))
-            return "qui c'è un buio pesto";
+            return "Qui c'è un buio pesto";
         return super.getDescrizione();
     }
 }
