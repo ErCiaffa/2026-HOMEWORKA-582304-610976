@@ -1,12 +1,9 @@
 package it.uniroma3.diadia.ambienti;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Set;
 import java.util.List;
-import java.util.Arrays;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -31,22 +28,17 @@ public class Stanza {
 	
 	private String nome;
     protected Map<String,Attrezzo> attrezzi;
-	protected int numeroAttrezzi;
-    
+
     private Map<String,Stanza> stanzeAdiacenti;
-    
-	private String[] direzioni;
-    
+
     /**
      * Crea una stanza. Non ci sono stanze adiacenti, non ci sono attrezzi.
      * @param nome il nome della stanza
      */
     public Stanza(String nome) {
         this.nome = nome;
-        this.numeroAttrezzi = 0;
-        this.direzioni = new String[NUMERO_MASSIMO_DIREZIONI];
         this.stanzeAdiacenti = new HashMap<>();
-        this.attrezzi = new HashMap<>();
+        this.attrezzi = new LinkedHashMap<>();
     }
 
     /**
@@ -56,7 +48,7 @@ public class Stanza {
      * @param stanza stanza adiacente nella direzione indicata dal primo parametro.
      */
     public void impostaStanzaAdiacente(String direzione, Stanza stanza) {
-        if(this.getDirezioni().size()<NUMERO_MASSIMO_DIREZIONI)
+        if(this.stanzeAdiacenti.size()<NUMERO_MASSIMO_DIREZIONI)
         	this.stanzeAdiacenti.put(direzione,stanza);
     }
 
@@ -121,9 +113,6 @@ public class Stanza {
     	risultato.append("Stanza: "+this.nome);
     	risultato.append("\nUscite: "+ this.stanzeAdiacenti.keySet().stream()
                 .collect(Collectors.joining(" ")));
-//    	for (String direzione : this.direzioni)
-//    		if (direzione!=null)
-//    			risultato.append(" " + direzione);
         risultato.append("\nAttrezzi nella stanza: ");
         if (this.attrezzi.isEmpty()){
             risultato.append("Nessun Attrezzo");
@@ -132,10 +121,6 @@ public class Stanza {
                     .map(Attrezzo::toString)
                     .collect(Collectors.joining(" ")));
         }
-//    	for (Attrezzo attrezzo : this.attrezzi.values()) {
-//			if(attrezzo != null)
-//				risultato.append(attrezzo.toString()+" ");
-//    	}
     	return risultato.toString();
     }
 
@@ -152,12 +137,19 @@ public class Stanza {
 	}
 
 	 /**
-     * Restituisce la collezione di attrezzi presenti nella stanza.
-     * @return la collezione di attrezzi nella stanza.
+     * Restituisce la lista di attrezzi presenti nella stanza,
+     * nell'ordine in cui sono stati aggiunti.
      */
-	public Collection<Attrezzo> getAttrezzi() {
-        return this.attrezzi.values();
+	public List<Attrezzo> getAttrezzi() {
+        return new ArrayList<>(this.attrezzi.values());
     }
+
+	/**
+	 * Restituisce la mappa delle stanze adiacenti per direzione.
+	 */
+	public Map<String, Stanza> getMapStanzeAdiacenti() {
+		return this.stanzeAdiacenti;
+	}
 
 	/**
 	 * Rimuove un attrezzo dalla stanza (ricerca in base al nome).
@@ -177,5 +169,18 @@ public class Stanza {
 	public List<String> getDirezioni() {
 		return new ArrayList<String>(this.stanzeAdiacenti.keySet());
     }
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof Stanza)) return false;
+		Stanza s = (Stanza) o;
+		return Objects.equals(this.nome, s.nome);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hashCode(this.nome);
+	}
 
 }
