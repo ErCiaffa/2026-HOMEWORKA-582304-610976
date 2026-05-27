@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
@@ -81,44 +82,34 @@ public class Borsa {
 
         return s.toString();
     }
-    public String getContenutoOrdinatoPerPeso() {
-        if (this.isEmpty()) return "Borsa Vuota";
-
-        // 1. Creiamo una ArrayList passando i valori della mappa
+    public List<Attrezzo> getContenutoOrdinatoPerPeso() {
         List<Attrezzo> listaOrdinata = new ArrayList<>(this.attrezzi.values());
-
-        // 2. Ordiniamo la lista usando il Comparator richiesto
         listaOrdinata.sort(Comparator.comparingInt(Attrezzo::getPeso)
                 .thenComparing(Attrezzo::getNome));
-
-        // 3. Restituiamo la rappresentazione testuale della lista
-        return listaOrdinata.toString();
+        return listaOrdinata;
     }
 
-    public String getContenutoOrdinatoPerNome() {
-        if (this.isEmpty()) return "Borsa Vuota";
-
-        // 1. Creiamo un TreeSet con un Comparator personalizzato sul nome
+    public Set<Attrezzo> getContenutoOrdinatoPerNome() {
         Set<Attrezzo> setOrdinato = new TreeSet<>(Comparator.comparing(Attrezzo::getNome));
-
-        // 2. Aggiungiamo tutti i valori: il TreeSet li ordinerà in automatico
         setOrdinato.addAll(this.attrezzi.values());
-
-        // 3. Restituiamo la rappresentazione testuale del Set
-        return setOrdinato.toString();
+        return setOrdinato;
     }
 
-    public String getContenutoRaggruppatoPerPeso() {
-        if (this.isEmpty()) return "Borsa Vuota";
-
-        // 1. Usiamo lo Stream per raggruppare i valori per peso dentro un Set
-        Map<Integer, Set<Attrezzo>> raggruppati = this.attrezzi.values().stream()
+    public Map<Integer, Set<Attrezzo>> getContenutoRaggruppatoPerPeso() {
+        return this.attrezzi.values().stream()
                 .collect(Collectors.groupingBy(
                         Attrezzo::getPeso,
                         Collectors.toSet()
                 ));
+    }
 
-        // 2. Restituiamo la rappresentazione testuale della Mappa
-        return raggruppati.toString();
+    // Tiebreaker sul nome: senza, il TreeSet considererebbe uguali due attrezzi
+    // di pari peso e ne perderebbe uno.
+    public SortedSet<Attrezzo> getSortedSetOrdinatoPerPeso() {
+        SortedSet<Attrezzo> ordinato = new TreeSet<>(
+                Comparator.comparingInt(Attrezzo::getPeso)
+                        .thenComparing(Attrezzo::getNome));
+        ordinato.addAll(this.attrezzi.values());
+        return ordinato;
     }
 }

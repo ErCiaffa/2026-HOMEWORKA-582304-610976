@@ -23,13 +23,22 @@ public class ComandoGuarda implements Comando {
                 // Comando con parametro: "guarda peso", "guarda nome", ecc.
                 switch (this.parametro.toLowerCase()) {
                     case "peso":
-                        partita.getIO().mostraMessaggio("Inventario (ordinato per peso):\n" + partita.getBorsa().getContenutoOrdinatoPerPeso());
+                        if (partita.getBorsa().isEmpty())
+                            partita.getIO().mostraMessaggio("Inventario (ordinato per peso):\nBorsa Vuota");
+                        else
+                            partita.getIO().mostraMessaggio("Inventario (ordinato per peso):\n" + partita.getBorsa().getContenutoOrdinatoPerPeso());
                         break;
                     case "nome":
-                        partita.getIO().mostraMessaggio("Inventario (ordinato per nome):\n" + partita.getBorsa().getContenutoOrdinatoPerNome());
+                        if (partita.getBorsa().isEmpty())
+                            partita.getIO().mostraMessaggio("Inventario (ordinato per nome):\nBorsa Vuota");
+                        else
+                            partita.getIO().mostraMessaggio("Inventario (ordinato per nome):\n" + partita.getBorsa().getContenutoOrdinatoPerNome());
                         break;
                     case "gruppi":
-                        partita.getIO().mostraMessaggio("Inventario (raggruppato per peso):\n" + partita.getBorsa().getContenutoRaggruppatoPerPeso());
+                        if (partita.getBorsa().isEmpty())
+                            partita.getIO().mostraMessaggio("Inventario (raggruppato per peso):\nBorsa Vuota");
+                        else
+                            partita.getIO().mostraMessaggio("Inventario (raggruppato per peso):\n" + partita.getBorsa().getContenutoRaggruppatoPerPeso());
                         break;
                     default:
                         // Se l'utente digita "guarda caso" o parole non previste
