@@ -2,7 +2,7 @@
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import it.uniroma3.diadia.ambienti.StanzaMagica;
@@ -14,7 +14,7 @@ class StanzaMagicaTest {
 	private Attrezzo a;
 	
 
-	@Before
+	@BeforeEach
 	public void setUp() {
 		stanza = new StanzaMagica("Magica",2);	
 		a = new Attrezzo("TroppiAttrezzi",2);
