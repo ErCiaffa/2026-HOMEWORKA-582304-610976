@@ -89,8 +89,8 @@ public class Borsa {
         return listaOrdinata;
     }
 
-    public Set<Attrezzo> getContenutoOrdinatoPerNome() {
-        Set<Attrezzo> setOrdinato = new TreeSet<>(Comparator.comparing(Attrezzo::getNome));
+    public SortedSet<Attrezzo> getContenutoOrdinatoPerNome() {
+        SortedSet<Attrezzo> setOrdinato = new TreeSet<>(Comparator.comparing(Attrezzo::getNome));
         setOrdinato.addAll(this.attrezzi.values());
         return setOrdinato;
     }
