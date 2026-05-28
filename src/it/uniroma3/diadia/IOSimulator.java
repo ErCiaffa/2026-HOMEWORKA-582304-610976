@@ -1,17 +1,16 @@
 package it.uniroma3.diadia;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class IOSimulator implements IO {
 
-    private String[] comandi;
-    private int indice;
-    private List<String> uscite;
+    private final Iterator<String> input;
+    private final List<String> uscite;
 
-    public IOSimulator(String[] comandi) {
-        this.comandi = comandi;
-        this.indice = 0;
+    public IOSimulator(List<String> comandi) {
+        this.input = comandi.iterator();
         this.uscite = new ArrayList<>();
     }
 
@@ -22,7 +21,7 @@ public class IOSimulator implements IO {
 
     @Override
     public String leggiRiga() {
-        return this.comandi[this.indice++];
+        return this.input.next();
     }
 
     public List<String> getUscite() {
