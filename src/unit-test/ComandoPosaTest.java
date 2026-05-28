@@ -3,6 +3,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import it.uniroma3.diadia.IOSimulator;
 import it.uniroma3.diadia.Partita;
 import it.uniroma3.diadia.ambienti.Labirinto;
@@ -16,7 +18,7 @@ class ComandoPosaTest {
 
     @BeforeEach
     void setUp() {
-        io = new IOSimulator(new String[]{});
+        io = new IOSimulator(List.of());
         partita = new Partita(new Labirinto(), io);
     }
 
