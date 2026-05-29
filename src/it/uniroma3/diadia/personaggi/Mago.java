@@ -7,6 +7,7 @@ public class Mago extends AbstractPersonaggio {
 	
 	private static final String MESSAGGIO_DONO = "Sei un vero simpaticone, " + "con una mia magica azione, troverai un nuovo oggetto " + "per il tuo borsone!";
 	private static final String MESSAGGIO_SCUSE = "Mi spiace, ma non ho piu' nulla...";
+	private static final String MESSAGGIO_REGALO = "Grazie del regalo!" + " e lo lascia cadere alleggerito a terra.";
 	private Attrezzo attrezzo;
 	
 	public Mago(String nome, String presentazione, Attrezzo attrezzo) {
@@ -26,5 +27,14 @@ public class Mago extends AbstractPersonaggio {
 			msg = MESSAGGIO_SCUSE;
 		}
 		return msg;
+	}
+	
+	public String riceviRegalo(Attrezzo attrezzo, Partita partita) {
+		if(attrezzo==null)
+			return null;
+		Attrezzo nuovoAttrezzo=new Attrezzo(attrezzo.getNome(),attrezzo.getPeso()/2);
+		partita.getStanzaCorrente().addAttrezzo(nuovoAttrezzo);
+		return MESSAGGIO_REGALO;
+		
 	}
 }

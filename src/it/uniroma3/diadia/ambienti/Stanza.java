@@ -132,6 +132,8 @@ public class Stanza {
                     .map(Attrezzo::toString)
                     .collect(Collectors.joining(" ")));
         }
+        if(this.getPersonaggio()!=null)
+        	risultato.append("\nPersonaggio: "+this.getPersonaggio().getClass().getSimpleName()+" "+this.getPersonaggio());
     	return risultato.toString();
     }
 
