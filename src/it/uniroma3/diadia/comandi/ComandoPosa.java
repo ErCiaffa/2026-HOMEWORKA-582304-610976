@@ -11,15 +11,12 @@ import it.uniroma3.diadia.attrezzi.Attrezzo;
  *  
  * @param nomeAttrezzo
  */
-public class ComandoPosa implements Comando {
+public class ComandoPosa extends AbstractComando {
 
-	private String nomeAttrezzo;
-	
-	
 	public ComandoPosa(String nomeAttrezzo) {
-		this.nomeAttrezzo=nomeAttrezzo;
+		this.parametro=nomeAttrezzo;
 	}
-	
+
 	public ComandoPosa() {
 		this(null);
 	}
@@ -30,13 +27,13 @@ public class ComandoPosa implements Comando {
 	//gli attrezzi posati vengono rimossi dalla borsa e aggiunti alla stanza
 	@Override
 	public void esegui(Partita partita) {
-		if(this.nomeAttrezzo==null)
+		if(this.parametro==null)
 			partita.getIO().mostraMessaggio("Quale attrezzo vuoi posare ?");
 		else {
-			Attrezzo attrezzo=partita.getBorsa().getAttrezzo(this.nomeAttrezzo);
+			Attrezzo attrezzo=partita.getBorsa().getAttrezzo(this.parametro);
 			if(attrezzo!=null) {
 				if(partita.getStanzaCorrente().addAttrezzo(attrezzo)) {
-					partita.getBorsa().removeAttrezzo(nomeAttrezzo);
+					partita.getBorsa().removeAttrezzo(parametro);
 					partita.getIO().mostraMessaggio("Attrezzo posato nella stanza !");
 				}else
 					partita.getIO().mostraMessaggio("Capienza stanza raggiunta,impossibile aggiungere l'attrezzo !");
@@ -46,17 +43,6 @@ public class ComandoPosa implements Comando {
 		//inputOutput.mostraMessaggio(partita.getStanzaCorrente().getDescrizione());
 	
 		
-	}
-
-	@Override
-	public void setParametro(String parametro) {
-		this.nomeAttrezzo=parametro;
-		
-	}
-
-	@Override
-	public String getParametro() {
-		return this.nomeAttrezzo;
 	}
 
 	@Override
