@@ -9,10 +9,6 @@ public class ComandoFine extends AbstractComando {
     	partita.getIO().mostraMessaggio("Grazie di aver giocato!");
     	partita.setFinita();
     }
-    @Override
-    public String getNome() {
-        return "fine";
-    }
 }
 
 
