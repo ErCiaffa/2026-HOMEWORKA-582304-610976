@@ -1,24 +1,18 @@
 package it.uniroma3.diadia.comandi;
 
 import it.uniroma3.diadia.Partita;
-
 import java.util.Collections;
 import java.util.Set;
 import java.util.TreeSet;
 
-
-/**
- * Classe astratta che fornisce un'implementazione di default
- * della gestione del parametro per tutti i comandi.
- *
- * Le sottoclassi devono definire solo {@link #esegui(Partita)} e
- * {@link #getNome()}; ereditano gratuitamente {@link #setParametro(String)}
- * e {@link #getParametro()}, eliminando le implementazioni "vuote" o
- * ripetute (principio DRY).
- */
 public abstract class AbstractComando implements Comando {
+
+    // L'elenco visibile dal comando aiuto richiesto dal testo
     private static final Set<String> nomiComandiDisponibili = new TreeSet<>();
+
     protected String parametro;
+
+    // Al momento della creazione degli oggetti istanza, registra il nome nell'elenco
     protected AbstractComando() {
         nomiComandiDisponibili.add(this.getNome());
     }
@@ -26,6 +20,7 @@ public abstract class AbstractComando implements Comando {
     public static Set<String> getNomiComandiDisponibili() {
         return Collections.unmodifiableSet(nomiComandiDisponibili);
     }
+
     @Override
     public void setParametro(String parametro) {
         this.parametro = parametro;
@@ -43,6 +38,6 @@ public abstract class AbstractComando implements Comando {
     public String getNome() {
         String n = this.getClass().getSimpleName(); // "ComandoVai"
         n = n.replaceFirst("Comando", "");          // "Vai"
-        return n.substring(0,1).toLowerCase() + n.substring(1); // "vai"
+        return n.substring(0, 1).toLowerCase() + n.substring(1); // "vai"
     }
 }
