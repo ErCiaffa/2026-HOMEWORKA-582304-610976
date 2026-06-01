@@ -21,13 +21,21 @@ public class Partita {
 	private IO io;
 	private boolean finita;
 	final Giocatore player;
-	
+
 	public Partita(Labirinto labirinto,IO io){
-		this.labirinto = labirinto;
-		this.stanzaCorrente = labirinto.getStanzaIniziale();
+		this.setLabirinto(labirinto);
 		this.player = new Giocatore();
 		this.finita = false;
 		this.io = io;
+	}
+
+	public Partita(Labirinto labirinto) {
+		this(labirinto, new IOConsole());
+	}
+
+	public void setLabirinto(Labirinto labirinto) {
+		this.labirinto = labirinto;
+		this.stanzaCorrente = labirinto.getStanzaIniziale();
 	}
 
 	public IO getIO() {
