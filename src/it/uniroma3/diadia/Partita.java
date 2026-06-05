@@ -79,5 +79,9 @@ public class Partita {
 	public Borsa getBorsa() {
 		return player.getBorsa();
 	}
+
+	public Giocatore getGiocatore() {
+		return this.player;
+	}
 	
 }

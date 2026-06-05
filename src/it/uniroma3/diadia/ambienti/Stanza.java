@@ -8,6 +8,8 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import it.uniroma3.diadia.attrezzi.Attrezzo;
+import it.uniroma3.diadia.personaggi.AbstractPersonaggio;
+
 
 
 /**
@@ -30,6 +32,8 @@ public class Stanza {
     protected Map<String,Attrezzo> attrezzi;
 
     private Map<String,Stanza> stanzeAdiacenti;
+
+    private AbstractPersonaggio personaggio;
 
     /**
      * Crea una stanza. Non ci sono stanze adiacenti, non ci sono attrezzi.
@@ -103,6 +107,14 @@ public class Stanza {
         return false;
     }
 
+    public void setPersonaggio(AbstractPersonaggio personaggio) {
+        this.personaggio = personaggio;
+	}
+
+    public AbstractPersonaggio getPersonaggio() {
+        return this.personaggio;
+    }
+
    /**
 	* Restituisce una rappresentazione stringa di questa stanza,
 	* stampadone la descrizione, le uscite e gli eventuali attrezzi contenuti
@@ -121,6 +133,8 @@ public class Stanza {
                     .map(Attrezzo::toString)
                     .collect(Collectors.joining(" ")));
         }
+        if(this.getPersonaggio()!=null)
+        	risultato.append("\nPersonaggio: "+this.getPersonaggio().getClass().getSimpleName()+" "+this.getPersonaggio());
     	return risultato.toString();
     }
 
