@@ -19,7 +19,7 @@ class PartitaTest {
     @BeforeEach
     void setUp() {
 
-        this.partita = new Partita(new Labirinto(), new IOConsole());
+        this.partita = new Partita(Labirinto.creaLabirintoDiDefault(), new IOConsole());
         this.stanzaTest = new Stanza("Test");
     }
 

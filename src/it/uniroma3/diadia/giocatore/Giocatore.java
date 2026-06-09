@@ -1,13 +1,11 @@
 package it.uniroma3.diadia.giocatore;
 
+import it.uniroma3.diadia.Configurazione;
 import it.uniroma3.diadia.attrezzi.Attrezzo;
 
 public class Giocatore {
-    // TODO: Giocatore ha la responsabilità di gestire i CFU del giocatore e du memorizzare gli attrezzi in un oggetto istanza della classe Borsa
-    // e aggiungere un riferimento ad un'istanza di Giocatore nella classe Partita (che ovviamente dovrà essere liberata dalla responsabilità spostate nella nuova classe)
-    // >>(vedi codice nel pdf)
 
-    static final private int CFU_INIZIALI = 20;
+    static final private int CFU_INIZIALI = Configurazione.CFU_INIZIALI;
     private int cfu;
     final Borsa borsa;
     public Giocatore (){

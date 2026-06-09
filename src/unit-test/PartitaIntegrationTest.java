@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import it.uniroma3.diadia.DiaDia;
 import it.uniroma3.diadia.IOSimulator;
 import it.uniroma3.diadia.ambienti.Labirinto;
-import it.uniroma3.diadia.ambienti.LabirintoBuilder;
 
 /**
  * Test di integrazione end-to-end della Partita:
@@ -25,13 +24,13 @@ class PartitaIntegrationTest {
      * ========================================================= */
 
     private static Labirinto monolocale(){
-        return new LabirintoBuilder()
+        return Labirinto.newBuilder()
                 .addStanzaIniziale("Salone")
                 .getLabirinto();
     }
 
     private static Labirinto bilocale(){
-        return new LabirintoBuilder()
+        return Labirinto.newBuilder()
                 .addStanzaIniziale("Salone")
                 .addStanzaVincente("Cucina")
                 .addAdiacenzaAvanzata("Salone","Cucina","est")
@@ -40,17 +39,17 @@ class PartitaIntegrationTest {
 
     /*
      *                              [Soffitta] (buia: serve "torcia")
-     *                                  | sopra
+     *                                  | nord
      *  [Camera] --ovest-- [Corridoio*] --est--> [Bagno] (VINCENTE)
-     *                          | nord       (*bloccata est: serve "chiaveBagno" nella stanza)
+     *                          | sud        (*bloccata est: serve "chiaveBagno" nella stanza)
      *  [Giardino] --ovest-- [Salone] --est--> [Cucina]
      *                          | nord
      *                       [Ingresso] (INIZIALE)
-     *                          | sotto
+     *                          | sud
      *                       [Cantina] (magica, soglia=1)
      */
     private static Labirinto mappa(){
-        return new LabirintoBuilder()
+        return Labirinto.newBuilder()
                 .addStanzaIniziale("Ingresso")
                     .addAttrezzo("zerbino", 1)
 
@@ -89,8 +88,8 @@ class PartitaIntegrationTest {
                 .addAdiacenzaAvanzata("Salone", "Giardino", "ovest")
                 .addAdiacenzaAvanzata("Salone", "Corridoio", "nord")
                 .addAdiacenzaAvanzata("Corridoio", "Camera da letto", "ovest")
-                .addAdiacenzaAvanzata("Corridoio", "Soffitta", "sopra")
-                .addAdiacenzaAvanzata("Ingresso", "Cantina", "sotto")
+                .addAdiacenzaAvanzata("Corridoio", "Soffitta", "nord")
+                .addAdiacenzaAvanzata("Ingresso", "Cantina", "sud")
                 .addAdiacenzaAvanzata("Corridoio", "Bagno", "est")
                 .getLabirinto();
     }
@@ -140,7 +139,7 @@ class PartitaIntegrationTest {
     void bilocale_adiacenzaBidirezionale_ritornoIndietro(){
         // est porta a Cucina (vincente)  -> il primo "vai est" vince e termina.
         // Per verificare il ritorno costruisco un bilocale-bis con cucina NON vincente.
-        Labirinto bidi = new LabirintoBuilder()
+        Labirinto bidi = Labirinto.newBuilder()
                 .addStanzaIniziale("A")
                 .addStanza("B")
                 .addAdiacenzaAvanzata("A","B","est")
@@ -196,7 +195,7 @@ class PartitaIntegrationTest {
         IOSimulator io = new IOSimulator(List.of(
                 "vai nord",    // Salone
                 "vai nord",    // Corridoio
-                "vai sopra",   // Soffitta (buia)
+                "vai nord",    // Soffitta (buia)
                 "fine"
         ));
         new DiaDia(mappa(), io).gioca();
@@ -212,10 +211,10 @@ class PartitaIntegrationTest {
                 "prendi torcia",
                 "vai ovest",      // Salone
                 "vai nord",       // Corridoio
-                "vai sopra",      // Soffitta (ancora buia)
+                "vai nord",       // Soffitta (ancora buia)
                 "posa torcia",    // ora illuminata
-                "vai sotto",      // torna in Corridoio
-                "vai sopra",      // rientra in Soffitta illuminata
+                "vai sud",        // torna in Corridoio
+                "vai nord",       // rientra in Soffitta illuminata
                 "fine"
         ));
         new DiaDia(mappa(), io).gioca();
@@ -298,10 +297,10 @@ class PartitaIntegrationTest {
 
     @Test
     void mappa_accessoVerticaleSottoESopra(){
-        // Verifica che le adiacenze "sotto"/"sopra" funzionino in entrambi i sensi
+        // Verifica che le adiacenze verticali (sud/nord) funzionino in entrambi i sensi
         IOSimulator io = new IOSimulator(List.of(
-                "vai sotto",    // Ingresso -> Cantina
-                "vai sopra",    // Cantina -> Ingresso
+                "vai sud",      // Ingresso -> Cantina
+                "vai nord",     // Cantina -> Ingresso
                 "fine"
         ));
         new DiaDia(mappa(), io).gioca();

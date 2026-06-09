@@ -1,13 +1,12 @@
 package it.uniroma3.diadia;
 
+import java.util.Scanner;
+
 import it.uniroma3.diadia.ambienti.Labirinto;
-import it.uniroma3.diadia.ambienti.LabirintoBuilder;
-import it.uniroma3.diadia.attrezzi.Attrezzo;
 import it.uniroma3.diadia.comandi.Comando;
 import it.uniroma3.diadia.comandi.FabbricaDiComandi;
 import it.uniroma3.diadia.comandi.FabbricaDiComandiFisarmonica;
 import it.uniroma3.diadia.comandi.FabbricaDiComandiRiflessiva;
-import java.util.Scanner;
 
 /**
  * Classe principale di diadia, un semplice gioco di ruolo ambientato al dia.
@@ -46,7 +45,7 @@ public class DiaDia {
 
 
 	public DiaDia(IO io) {
-		this(new Labirinto(), io);
+		this(Labirinto.creaLabirintoDiDefault(), io);
 	}
 
 	public void gioca() {
@@ -80,10 +79,12 @@ public class DiaDia {
 	}
 
 	public static void main(String[] argc) {
-		try (Scanner scannerDiLinee = new Scanner(System.in)) {
-	        IO io = new IOConsole(scannerDiLinee);
-	        DiaDia gioco = new DiaDia(io);
+		// Lo Scanner su System.in vive per tutta la partita e viene chiuso
+		// una sola volta, qui, all'uscita del try-with-resources.
+		try (Scanner scanner = new Scanner(System.in)) {
+			IO io = new IOConsole(scanner);
+			DiaDia gioco = new DiaDia(io);
 			gioco.gioca();
-	    }
+		}
 	}
 }
