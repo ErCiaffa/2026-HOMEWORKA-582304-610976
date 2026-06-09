@@ -7,6 +7,7 @@ import it.uniroma3.diadia.comandi.Comando;
 import it.uniroma3.diadia.comandi.FabbricaDiComandi;
 import it.uniroma3.diadia.comandi.FabbricaDiComandiFisarmonica;
 import it.uniroma3.diadia.comandi.FabbricaDiComandiRiflessiva;
+import java.util.Scanner;
 
 /**
  * Classe principale di diadia, un semplice gioco di ruolo ambientato al dia.
@@ -79,8 +80,10 @@ public class DiaDia {
 	}
 
 	public static void main(String[] argc) {
-		IO io = new IOConsole();
-		DiaDia gioco = new DiaDia(io);
-		gioco.gioca();
+		try (Scanner scannerDiLinee = new Scanner(System.in)) {
+	        IO io = new IOConsole(scannerDiLinee);
+	        DiaDia gioco = new DiaDia(io);
+			gioco.gioca();
+	    }
 	}
 }

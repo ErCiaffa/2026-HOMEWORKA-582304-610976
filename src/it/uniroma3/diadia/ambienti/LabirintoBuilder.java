@@ -52,7 +52,7 @@ public class LabirintoBuilder {
     /* ---------- adiacenze e attrezzi ---------- */
 
     /** Collega due stanze già aggiunte. */
-    public LabirintoBuilder addAdiacenza(String da, String a, String direzione) {
+    public LabirintoBuilder addAdiacenza(Direzione da, String a, Direzione direzione) {
         Stanza sDa = stanze.get(da);
         Stanza sA  = stanze.get(a);
         if (sDa == null || sA == null)
@@ -61,30 +61,6 @@ public class LabirintoBuilder {
         return this;
     }
 
-    /** Collegamento duplice della stanza  */
-
-    public LabirintoBuilder addAdiacenzaAvanzata(String da, String a, String direzione) {
-        Stanza sDa = stanze.get(da);
-        Stanza sA  = stanze.get(a);
-        if (sDa == null || sA == null)
-            throw new IllegalArgumentException("Stanza non trovata: " + da + " o " + a);
-        sDa.impostaStanzaAdiacente(direzione, sA);
-        sA.impostaStanzaAdiacente(direzioneOpposta(direzione), sDa);
-        return this;
-    }
-
-    private String direzioneOpposta(String direzione) {
-        switch (direzione) {
-            case "nord":  return "sud";
-            case "sud":   return "nord";
-            case "est":   return "ovest";
-            case "ovest": return "est";
-            case "sopra": return "sotto";
-            case "sotto": return "sopra";
-            default:
-                throw new IllegalArgumentException("Direzione sconosciuta: " + direzione);
-        }
-    }
 
     /** Aggiunge un attrezzo all'ultima stanza creata. */
     public LabirintoBuilder addAttrezzo(String nome, int peso) {

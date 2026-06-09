@@ -31,7 +31,7 @@ public class Stanza {
 	private String nome;
     protected Map<String,Attrezzo> attrezzi;
 
-    private Map<String,Stanza> stanzeAdiacenti;
+    private Map<Direzione,Stanza> stanzeAdiacenti;
 
     private AbstractPersonaggio personaggio;
 
@@ -51,7 +51,7 @@ public class Stanza {
      * @param direzione direzione in cui sara' posta la stanza adiacente.
      * @param stanza stanza adiacente nella direzione indicata dal primo parametro.
      */
-    public void impostaStanzaAdiacente(String direzione, Stanza stanza) {
+    public void impostaStanzaAdiacente(Direzione direzione, Stanza stanza) {
         if(this.stanzeAdiacenti.size()<NUMERO_MASSIMO_DIREZIONI)
         	this.stanzeAdiacenti.put(direzione,stanza);
     }
@@ -123,7 +123,7 @@ public class Stanza {
     public String toString() {
     	StringBuilder risultato = new StringBuilder();
     	risultato.append("Stanza: "+this.nome);
-    	risultato.append("\nUscite: "+ this.stanzeAdiacenti.keySet().stream()
+    	risultato.append("\nUscite: "+ this.stanzeAdiacenti.keySet().stream().map(Objects::toString)
                 .collect(Collectors.joining(" ")));
         risultato.append("\nAttrezzi nella stanza: ");
         if (this.attrezzi.isEmpty()){
@@ -161,7 +161,7 @@ public class Stanza {
 	/**
 	 * Restituisce la mappa delle stanze adiacenti per direzione.
 	 */
-	public Map<String, Stanza> getMapStanzeAdiacenti() {
+	public Map<Direzione, Stanza> getMapStanzeAdiacenti() {
 		return this.stanzeAdiacenti;
 	}
 
@@ -180,8 +180,8 @@ public class Stanza {
 	}
 
 
-	public List<String> getDirezioni() {
-		return new ArrayList<String>(this.stanzeAdiacenti.keySet());
+	public List<Direzione> getDirezioni() {
+		return new ArrayList<Direzione>(this.stanzeAdiacenti.keySet());
     }
 
 	@Override
