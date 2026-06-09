@@ -4,9 +4,6 @@ import it.uniroma3.diadia.Partita;
 
 public class ComandoGuarda extends AbstractComando {
 
-    // 1. Aggiungiamo la variabile per salvare la seconda parola digitata dall'utente
-    private String parametro;
-
     @Override
     public void esegui(Partita partita) {
         // Stampa sempre la descrizione della stanza
@@ -51,17 +48,6 @@ public class ComandoGuarda extends AbstractComando {
         } else {
             partita.getIO().mostraMessaggio("Il giocatore ha perso!");
         }
-    }
-
-    @Override
-    public void setParametro(String parametro) {
-        // 3. Ora salviamo il parametro invece di ignorarlo
-        this.parametro = parametro;
-    }
-
-    @Override
-    public String getParametro() {
-        return this.parametro;
     }
 
     @Override

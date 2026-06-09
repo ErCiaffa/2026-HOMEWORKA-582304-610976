@@ -1,5 +1,4 @@
 import it.uniroma3.diadia.ambienti.Labirinto;
-import it.uniroma3.diadia.ambienti.LabirintoBuilder;
 import it.uniroma3.diadia.ambienti.Stanza;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -10,7 +9,7 @@ class LabirintoBuilderTest {
 
 	@Test
 	void testCostruisceLabirintoMinimo() {
-		Labirinto l = new LabirintoBuilder()
+		Labirinto l = Labirinto.newBuilder()
 				.addStanzaIniziale("a")
 				.addStanzaVincente("b")
 				.addAdiacenza("a", "b", "nord")
@@ -23,7 +22,7 @@ class LabirintoBuilderTest {
 
 	@Test
 	void testAddAttrezzoVaSullUltimaStanza() {
-		Labirinto l = new LabirintoBuilder()
+		Labirinto l = Labirinto.newBuilder()
 				.addStanzaIniziale("a")
 					.addAttrezzo("osso", 1)
 				.addStanzaVincente("b")
@@ -40,7 +39,7 @@ class LabirintoBuilderTest {
 	@Test
 	void testAdiacenzaSuStanzaInesistenteLanciaEccezione() {
 		assertThrows(IllegalArgumentException.class, () ->
-			new LabirintoBuilder()
+			Labirinto.newBuilder()
 				.addStanzaIniziale("a")
 				.addAdiacenza("a", "fantasma", "nord")
 		);
@@ -49,13 +48,13 @@ class LabirintoBuilderTest {
 	@Test
 	void testAddAttrezzoSenzaStanzaLanciaEccezione() {
 		assertThrows(IllegalStateException.class, () ->
-			new LabirintoBuilder().addAttrezzo("osso", 1)
+			Labirinto.newBuilder().addAttrezzo("osso", 1)
 		);
 	}
 
 	@Test
 	void testCostruisceConTuttiITipiDiStanza() {
-		Labirinto l = new LabirintoBuilder()
+		Labirinto l = Labirinto.newBuilder()
 				.addStanzaIniziale("ingresso")
 				.addStanzaBuia("cantina", "lanterna")
 				.addStanzaBloccata("porta", "nord", "chiave")
@@ -77,7 +76,7 @@ class LabirintoBuilderTest {
 
 	@Test
 	void testStanzaBuiaSenzaAttrezzoMostraBuioPesto() {
-		Labirinto l = new LabirintoBuilder()
+		Labirinto l = Labirinto.newBuilder()
 				.addStanzaIniziale("ingresso")
 				.addStanzaBuia("cantina", "lanterna")
 				.addAdiacenza("ingresso", "cantina", "sud")

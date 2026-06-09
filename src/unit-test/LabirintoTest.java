@@ -11,7 +11,10 @@ class LabirintoTest {
 
 	@BeforeEach
 	void setUp() throws Exception {
-		this.labirinto = new Labirinto();
+		this.labirinto = Labirinto.creaLabirintoDiDefault();
+		// Verifica a compile-time del Builder pattern: il costruttore di Labirinto
+		// e' privato, quindi la riga seguente NON compila.
+		// Labirinto l = new Labirinto();
 	}
 
 	@Test

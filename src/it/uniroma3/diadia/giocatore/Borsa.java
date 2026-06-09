@@ -1,5 +1,6 @@
 package it.uniroma3.diadia.giocatore;
 
+import it.uniroma3.diadia.Configurazione;
 import it.uniroma3.diadia.attrezzi.Attrezzo;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -17,7 +18,7 @@ public class Borsa {
      * @author Ciaffaroni & Renda
      * @version 1.3
      */
-    public final static int DEFAULT_PESO_MAX_BORSA = 10;
+    public final static int DEFAULT_PESO_MAX_BORSA = Configurazione.BORSA_PESO_MAX;
     private Map<String, Attrezzo> attrezzi;
     private int pesoMax;
     public Borsa() {

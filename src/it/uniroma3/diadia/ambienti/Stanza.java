@@ -1,6 +1,6 @@
 package it.uniroma3.diadia.ambienti;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.List;
@@ -11,28 +11,26 @@ import it.uniroma3.diadia.attrezzi.Attrezzo;
 import it.uniroma3.diadia.personaggi.AbstractPersonaggio;
 
 
-
 /**
  * Classe it.uniroma3.diadia.ambienti.Stanza - una stanza in un gioco di ruolo.
  * Una stanza e' un luogo fisico nel gioco.
  * E' collegata ad altre stanze attraverso delle uscite.
  * Ogni uscita e' associata ad una direzione.
- * 
- * @author docente di POO 
+ *
+ * @author docente di POO
  * @see Attrezzo
  * @version base
 */
 
 public class Stanza {
-	
+
 	static final private int NUMERO_MASSIMO_DIREZIONI = 4;
 	static final private int NUMERO_MASSIMO_ATTREZZI = 10;
-	
+
 	private String nome;
     protected Map<String,Attrezzo> attrezzi;
 
     private Map<Direzione,Stanza> stanzeAdiacenti;
-
     private AbstractPersonaggio personaggio;
 
     /**
@@ -41,7 +39,7 @@ public class Stanza {
      */
     public Stanza(String nome) {
         this.nome = nome;
-        this.stanzeAdiacenti = new HashMap<>();
+        this.stanzeAdiacenti = new EnumMap<>(Direzione.class);
         this.attrezzi = new LinkedHashMap<>();
     }
 
@@ -52,17 +50,28 @@ public class Stanza {
      * @param stanza stanza adiacente nella direzione indicata dal primo parametro.
      */
     public void impostaStanzaAdiacente(Direzione direzione, Stanza stanza) {
-        if(this.stanzeAdiacenti.size()<NUMERO_MASSIMO_DIREZIONI)
-        	this.stanzeAdiacenti.put(direzione,stanza);
+        if (direzione != null && this.stanzeAdiacenti.size() < NUMERO_MASSIMO_DIREZIONI)
+        	this.stanzeAdiacenti.put(direzione, stanza);
+    }
+
+    /** Variante di comodo che accetta la direzione come stringa (parsing leniente). */
+    public void impostaStanzaAdiacente(String direzione, Stanza stanza) {
+        this.impostaStanzaAdiacente(Direzione.fromString(direzione), stanza);
     }
 
     /**
      * Restituisce la stanza adiacente nella direzione specificata
      * @param direzione
      */
-    public Stanza getStanzaAdiacente(String direzione) {
+    public Stanza getStanzaAdiacente(Direzione direzione) {
 		return this.stanzeAdiacenti.get(direzione);
 	}
+
+    /** Variante di comodo che accetta la direzione come stringa (null se non valida). */
+    public Stanza getStanzaAdiacente(String direzione) {
+        Direzione d = Direzione.fromString(direzione);
+        return d == null ? null : this.getStanzaAdiacente(d);
+    }
 
     /**
      * Restituisce la nome della stanza.
@@ -107,14 +116,6 @@ public class Stanza {
         return false;
     }
 
-    public void setPersonaggio(AbstractPersonaggio personaggio) {
-        this.personaggio = personaggio;
-	}
-
-    public AbstractPersonaggio getPersonaggio() {
-        return this.personaggio;
-    }
-
    /**
 	* Restituisce una rappresentazione stringa di questa stanza,
 	* stampadone la descrizione, le uscite e gli eventuali attrezzi contenuti
@@ -123,7 +124,8 @@ public class Stanza {
     public String toString() {
     	StringBuilder risultato = new StringBuilder();
     	risultato.append("Stanza: "+this.nome);
-    	risultato.append("\nUscite: "+ this.stanzeAdiacenti.keySet().stream().map(Objects::toString)
+    	risultato.append("\nUscite: "+ this.stanzeAdiacenti.keySet().stream()
+                .map(Direzione::name)
                 .collect(Collectors.joining(" ")));
         risultato.append("\nAttrezzi nella stanza: ");
         if (this.attrezzi.isEmpty()){
@@ -133,8 +135,9 @@ public class Stanza {
                     .map(Attrezzo::toString)
                     .collect(Collectors.joining(" ")));
         }
-        if(this.getPersonaggio()!=null)
-        	risultato.append("\nPersonaggio: "+this.getPersonaggio().getClass().getSimpleName()+" "+this.getPersonaggio());
+        if (this.personaggio != null)
+            risultato.append("\nPersonaggio: " + this.personaggio.getClass().getSimpleName()
+                    + " " + this.personaggio);
     	return risultato.toString();
     }
 
@@ -146,7 +149,7 @@ public class Stanza {
 		if (nomeAttrezzo == null) {
             return false;
         }
-        
+
         return this.attrezzi.containsKey(nomeAttrezzo);
 	}
 
@@ -181,8 +184,18 @@ public class Stanza {
 
 
 	public List<Direzione> getDirezioni() {
-		return new ArrayList<Direzione>(this.stanzeAdiacenti.keySet());
+		return new ArrayList<>(this.stanzeAdiacenti.keySet());
     }
+
+	/** Restituisce il personaggio presente nella stanza, oppure null. */
+	public AbstractPersonaggio getPersonaggio() {
+		return this.personaggio;
+	}
+
+	/** Colloca un personaggio nella stanza. */
+	public void setPersonaggio(AbstractPersonaggio personaggio) {
+		this.personaggio = personaggio;
+	}
 
 	@Override
 	public boolean equals(Object o) {

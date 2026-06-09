@@ -19,7 +19,7 @@ class ComandoPosaTest {
     @BeforeEach
     void setUp() {
         io = new IOSimulator(List.of());
-        partita = new Partita(new Labirinto(), io);
+        partita = new Partita(Labirinto.creaLabirintoDiDefault(), io);
     }
 
     @Test

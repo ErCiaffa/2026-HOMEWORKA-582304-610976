@@ -8,7 +8,10 @@ public class FabbricaDiComandiRiflessiva implements FabbricaDiComandi {
 
     @Override
     public Comando costruisciComando(String istruzione) {
-        Scanner scannerDiParole = new Scanner(istruzione.toLowerCase());
+        // NB: si lavora sull'istruzione originale per preservare il case del
+        // parametro (es. nomi di attrezzi come "chiaveBagno"); solo il nome del
+        // comando viene normalizzato per matchare il nome della classe.
+        Scanner scannerDiParole = new Scanner(istruzione);
         String nomeComando = null;
         String parametro = null;
 
@@ -20,7 +23,8 @@ public class FabbricaDiComandiRiflessiva implements FabbricaDiComandi {
         if (nomeComando == null)
             return new ComandoNonValido();
 
-        // "vai" -> "Vai" (capitalizzazione necessaria per matchare ComandoVai)
+        // "vai"/"VAI" -> "Vai" (capitalizzazione necessaria per matchare ComandoVai)
+        nomeComando = nomeComando.toLowerCase();
         String capitalizzato = Character.toUpperCase(nomeComando.charAt(0))
                              + nomeComando.substring(1);
         String fqcn = PACKAGE + PREFISSO + capitalizzato;
