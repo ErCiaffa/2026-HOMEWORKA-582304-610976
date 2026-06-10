@@ -1,13 +1,18 @@
 import it.uniroma3.diadia.ambienti.CaricatoreLabirinto;
+import it.uniroma3.diadia.ambienti.Direzione;
 import it.uniroma3.diadia.ambienti.FormatoFileNonValidoException;
 import it.uniroma3.diadia.ambienti.Labirinto;
 import it.uniroma3.diadia.ambienti.Stanza;
+import it.uniroma3.diadia.personaggi.Cane;
 import it.uniroma3.diadia.personaggi.Mago;
+import it.uniroma3.diadia.personaggi.Strega;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.StringReader;
 
 /**
@@ -305,5 +310,45 @@ class CaricatoreLabirintoTest {
 				"Atrio 0\n";          // soglia 0: il primo attrezzo posato viene gia' modificato
 		Labirinto l = new CaricatoreLabirinto(new StringReader(spec)).carica();
 		assertEquals("N10", l.getStanzaIniziale().getNome());
+	}
+
+	/* ===================== FILE DI PRODUZIONE ===================== */
+
+	/**
+	 * Valida la risorsa labirinto-universita.txt davvero spedita con il gioco
+	 * (unica eccezione alla filosofia "niente file": qui il file E' l'oggetto
+	 * del test, non una comodita').
+	 */
+	@Test
+	void labirintoUniversita_risorsaDiProduzioneValidaECompleta() {
+		InputStream spec = getClass().getClassLoader()
+				.getResourceAsStream("labirinto-universita.txt");
+		assertNotNull(spec, "risorsa labirinto-universita.txt non trovata nel classpath");
+		Labirinto l = new CaricatoreLabirinto(new InputStreamReader(spec)).carica();
+
+		Stanza atrio = l.getStanzaIniziale();
+		assertEquals("Atrio", atrio.getNome());
+		assertEquals("Biblioteca", l.getStanzaVincente().getNome());
+
+		// personaggi collocati
+		assertTrue(atrio.getPersonaggio() instanceof Cane);
+		Stanza segreteria = atrio.getStanzaAdiacente(Direzione.EST)
+				.getStanzaAdiacente(Direzione.NORD);
+		assertTrue(segreteria.getPersonaggio() instanceof Strega);
+		Stanza aulaMagica = atrio.getStanzaAdiacente(Direzione.OVEST)
+				.getStanzaAdiacente(Direzione.SUD);
+		assertTrue(aulaMagica.getPersonaggio() instanceof Mago);
+
+		// stanze speciali raggiungibili
+		Stanza sotterraneo = atrio.getStanzaAdiacente(Direzione.SUD)
+				.getStanzaAdiacente(Direzione.SUD);
+		assertEquals("Sotterraneo", sotterraneo.getNome());
+		assertTrue(sotterraneo.hasAttrezzo("piedediporco"));
+		Stanza corridoio = atrio.getStanzaAdiacente(Direzione.NORD);
+		assertEquals("CorridoioBiblioteca", corridoio.getNome());
+
+		// attrezzi al loro posto
+		assertTrue(atrio.hasAttrezzo("osso"));
+		assertTrue(atrio.getStanzaAdiacente(Direzione.SUD).hasAttrezzo("lanterna"));
 	}
 }
