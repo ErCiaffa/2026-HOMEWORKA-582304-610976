@@ -122,9 +122,13 @@ public class Labirinto {
 
 		/* ---------- adiacenze, attrezzi e personaggi ---------- */
 
-		/** Collega due stanze già aggiunte. */
+		/**
+		 * Collega due stanze già aggiunte. Una direzione non valida viene
+		 * ignorata senza errori (semantica dei test di riferimento del corso:
+		 * l'adiacenza semplicemente non viene aggiunta).
+		 */
 		public LabirintoBuilder addAdiacenza(String da, String a, String direzione) {
-			richiediStanza(da).impostaStanzaAdiacente(parseDirezione(direzione), richiediStanza(a));
+			richiediStanza(da).impostaStanzaAdiacente(Direzione.fromString(direzione), richiediStanza(a));
 			return this;
 		}
 
