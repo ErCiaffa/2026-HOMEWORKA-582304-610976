@@ -16,17 +16,17 @@ public class ComandoPrendi extends AbstractComando {
     @Override
     public void esegui(Partita partita) {
     	if(this.parametro==null)
-			partita.getIO().mostraMessaggio("Quale attrezzo vuoi prendere ?");
+			this.getIO(partita).mostraMessaggio("Quale attrezzo vuoi prendere ?");
 		else {
 			Attrezzo attrezzo=partita.getStanzaCorrente().getAttrezzo(this.parametro);
 			if(attrezzo!=null) {
 				if(partita.getBorsa().addAttrezzo(attrezzo)) {
-					partita.getIO().mostraMessaggio("Attrezzo inserito nella borsa !");
+					this.getIO(partita).mostraMessaggio("Attrezzo inserito nella borsa !");
 					partita.getStanzaCorrente().removeAttrezzo(attrezzo);
 				}else
-					partita.getIO().mostraMessaggio("La borsa è piena !");
+					this.getIO(partita).mostraMessaggio("La borsa è piena !");
 			}else
-				partita.getIO().mostraMessaggio("Attrezzo non presente nella stanza !");
+				this.getIO(partita).mostraMessaggio("Attrezzo non presente nella stanza !");
 		}
     }
     @Override

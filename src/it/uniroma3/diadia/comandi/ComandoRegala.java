@@ -31,7 +31,7 @@ public class ComandoRegala extends AbstractComando {
 			this.messaggio = personaggio.riceviRegalo(attrezzo, partita);
 			partita.getGiocatore().getBorsa().removeAttrezzo(this.parametro);
 		}
-		partita.getIO().mostraMessaggio(this.messaggio);
+		this.getIO(partita).mostraMessaggio(this.messaggio);
 	}
 
 	public String getMessaggio() {

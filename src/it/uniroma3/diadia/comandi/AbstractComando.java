@@ -27,6 +27,22 @@ public abstract class AbstractComando implements Comando {
     private static Set<String> nomiComandiDisponibili;
 
     protected String parametro;
+    private it.uniroma3.diadia.IO io;
+
+    /** Inietta l'oggetto IO (tipicamente a cura della fabbrica di comandi). */
+    public void setIo(it.uniroma3.diadia.IO io) {
+        this.io = io;
+    }
+
+    /**
+     * Accesso all'IO per le sottoclassi (risposta alla domanda delle
+     * trasparenze POO-20: campo privato + metodo protected). Se l'IO non
+     * e' stato iniettato (es. comandi istanziati direttamente nei test)
+     * si ripiega su quello della partita.
+     */
+    protected it.uniroma3.diadia.IO getIO(Partita partita) {
+        return this.io != null ? this.io : partita.getIO();
+    }
 
     /**
      * Restituisce i nomi di tutti i comandi del gioco, ricavati (una sola

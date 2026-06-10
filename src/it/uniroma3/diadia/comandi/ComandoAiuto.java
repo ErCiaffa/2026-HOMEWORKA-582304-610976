@@ -11,7 +11,7 @@ public class ComandoAiuto extends AbstractComando {
     public void esegui(Partita partita) {
         Set<String> nomi = AbstractComando.getNomiComandiDisponibili();
         String elenco = nomi.stream().collect(Collectors.joining(", "));
-        partita.getIO().mostraMessaggio("Comandi disponibili: " + elenco);
+        this.getIO(partita).mostraMessaggio("Comandi disponibili: " + elenco);
     }
 }
 

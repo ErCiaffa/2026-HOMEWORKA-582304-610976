@@ -1,11 +1,16 @@
 package it.uniroma3.diadia;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.util.List;
 import java.util.Scanner;
 
+import it.uniroma3.diadia.ambienti.CaricatoreLabirinto;
 import it.uniroma3.diadia.ambienti.Labirinto;
 import it.uniroma3.diadia.comandi.Comando;
 import it.uniroma3.diadia.comandi.FabbricaDiComandi;
-import it.uniroma3.diadia.comandi.FabbricaDiComandiFisarmonica;
 import it.uniroma3.diadia.comandi.FabbricaDiComandiRiflessiva;
 
 /**
@@ -31,8 +36,10 @@ public class DiaDia {
 			"puoi raccoglierli, usarli, posarli quando ti sembrano inutili\n" +
 			"o regalarli se pensi che possano ingraziarti qualcuno.\n\n"+
 			"Per conoscere le istruzioni usa il comando 'aiuto'.";
-	
-	static final private String[] elencoComandi = {"vai", "aiuto", "fine", "prendi", "posa"};
+
+	/* Livelli di difficolta' crescente (POO-23): un file di specifica per livello. */
+	static final private List<String> LIVELLI =
+			List.of("labirinto1.txt", "labirinto2.txt", "labirinto3.txt");
 
 	private Partita partita;
 	private Labirinto labirinto;
@@ -65,7 +72,7 @@ public class DiaDia {
 
 	private boolean processaIstruzione(String istruzione) {
 		Comando comandoDaEseguire;
-		FabbricaDiComandi factory = new FabbricaDiComandiRiflessiva();
+		FabbricaDiComandi factory = new FabbricaDiComandiRiflessiva(this.io);
 		comandoDaEseguire = factory.costruisciComando(istruzione);
 		comandoDaEseguire.esegui(this.partita);
 		if (this.partita.vinta())
@@ -78,13 +85,56 @@ public class DiaDia {
 		return this.partita.isFinita();
 	}
 
+	/** Esito dell'ultima partita giocata (per la gestione dei livelli). */
+	public boolean isPartitaVinta() {
+		return this.partita.vinta();
+	}
+
+	public boolean isGiocatoreVivo() {
+		return this.partita.giocatoreIsVivo();
+	}
+
+	/**
+	 * Carica il labirinto di un livello dalla specifica testuale (risorsa nel
+	 * classpath, per nome logico: funziona anche dentro il jar). In assenza
+	 * della risorsa si ripiega sul labirinto cablato di default.
+	 */
+	private static Labirinto caricaLivello(String risorsa) {
+		InputStream spec = DiaDia.class.getClassLoader().getResourceAsStream(risorsa);
+		if (spec == null)
+			return Labirinto.creaLabirintoDiDefault();
+		try (Reader reader = new InputStreamReader(spec)) {
+			return new CaricatoreLabirinto(reader).carica();
+		} catch (IOException e) {
+			return Labirinto.creaLabirintoDiDefault();
+		}
+	}
+
 	public static void main(String[] argc) {
-		// Lo Scanner su System.in vive per tutta la partita e viene chiuso
-		// una sola volta, qui, all'uscita del try-with-resources.
+		// Lo Scanner su System.in vive per tutta la sessione di gioco e viene
+		// chiuso una sola volta, qui, all'uscita del try-with-resources.
 		try (Scanner scanner = new Scanner(System.in)) {
 			IO io = new IOConsole(scanner);
-			DiaDia gioco = new DiaDia(io);
-			gioco.gioca();
+			// Livelli di difficolta' crescente (POO-23): si vince passando
+			// al livello successivo; se si perde si ricomincia dal primo.
+			int livello = 0;
+			while (livello < LIVELLI.size()) {
+				io.mostraMessaggio("=== Livello " + (livello + 1) + " di " + LIVELLI.size() + " ===");
+				DiaDia gioco = new DiaDia(caricaLivello(LIVELLI.get(livello)), io);
+				gioco.gioca();
+				if (gioco.isPartitaVinta()) {
+					livello++;
+					if (livello < LIVELLI.size())
+						io.mostraMessaggio("Livello superato! Si passa al successivo...");
+					else
+						io.mostraMessaggio("Complimenti, hai completato tutti i livelli del gioco!");
+				} else if (!gioco.isGiocatoreVivo()) {
+					io.mostraMessaggio("Hai esaurito i CFU: si ricomincia dal primo livello...");
+					livello = 0;
+				} else {
+					break; // comando 'fine': uscita dal gioco
+				}
+			}
 		}
 	}
 }

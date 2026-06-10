@@ -87,4 +87,22 @@ public class StanzaTest {
 	void test_removeAttrezzo_not_existent() {
 		assertFalse(n10.removeAttrezzo(osso), "Errore: rimozione di un attrezzo mai inserito deve restituire false.");
 	}
+
+	@Test
+	void test_equals_stessoNome_sonoUguali() {
+		assertEquals(new it.uniroma3.diadia.ambienti.Stanza("N10"),
+				new it.uniroma3.diadia.ambienti.Stanza("N10"));
+	}
+
+	@Test
+	void test_equals_nomeDiverso_sonoDiverse() {
+		assertNotEquals(new it.uniroma3.diadia.ambienti.Stanza("N10"),
+				new it.uniroma3.diadia.ambienti.Stanza("N11"));
+	}
+
+	@Test
+	void test_hashCode_coerenteConEquals() {
+		assertEquals(new it.uniroma3.diadia.ambienti.Stanza("N10").hashCode(),
+				new it.uniroma3.diadia.ambienti.Stanza("N10").hashCode());
+	}
 }

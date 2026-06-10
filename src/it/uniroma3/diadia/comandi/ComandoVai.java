@@ -8,17 +8,17 @@ public class ComandoVai extends AbstractComando {
     @Override
     public void esegui(Partita partita) {
         if(parametro==null) {
-            partita.getIO().mostraMessaggio("Dove vuoi andare ?");
+            this.getIO(partita).mostraMessaggio("Dove vuoi andare ?");
             return;
         }
         Stanza prossimaStanza = partita.getStanzaCorrente().getStanzaAdiacente(parametro);
         if (prossimaStanza == null)
-            partita.getIO().mostraMessaggio("Direzione inesistente");
+            this.getIO(partita).mostraMessaggio("Direzione inesistente");
         else {
             partita.setStanzaCorrente(prossimaStanza);
             partita.setCfu(partita.getCfu() - 1);
         }
-        partita.getIO().mostraMessaggio("Stanza Corrente: "+ partita.getStanzaCorrente().getDescrizione());
+        this.getIO(partita).mostraMessaggio("Stanza Corrente: "+ partita.getStanzaCorrente().getDescrizione());
     }
     @Override
     public String getNome() {

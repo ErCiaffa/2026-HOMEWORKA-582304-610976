@@ -1,0 +1,36 @@
+Stanze:
+Atrio
+AulaN10
+AulaN11
+Biblioteca
+
+StanzeBuie:
+Sotterraneo lanterna
+
+StanzeBloccate:
+Corridoio nord piedediporco
+
+StanzeMagiche:
+AulaMagica 2
+
+Estremi:
+Atrio
+Biblioteca
+
+Attrezzi:
+lanterna 3 AulaN10
+piedediporco 2 Sotterraneo
+
+Uscite:
+Atrio nord Corridoio
+Atrio sud AulaN10
+Atrio est AulaN11
+AulaN11 ovest Atrio
+AulaN11 nord AulaMagica
+AulaMagica sud AulaN11
+AulaN10 nord Atrio
+AulaN10 sud Sotterraneo
+Sotterraneo nord AulaN10
+Corridoio sud Atrio
+Corridoio nord Biblioteca
+Biblioteca sud Corridoio

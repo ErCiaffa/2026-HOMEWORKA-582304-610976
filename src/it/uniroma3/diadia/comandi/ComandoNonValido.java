@@ -6,7 +6,7 @@ public class ComandoNonValido extends AbstractComando {
 
     @Override
     public void esegui(Partita partita) {
-    	partita.getIO().mostraMessaggio("Comando non valido!");
+    	this.getIO(partita).mostraMessaggio("Comando non valido!");
     }
     @Override
     public String getNome() {

@@ -1,0 +1,27 @@
+Stanze:
+Atrio
+AulaN11
+AulaN10
+LaboratorioCampus
+Biblioteca
+
+Estremi:
+Atrio
+Biblioteca
+
+Attrezzi:
+osso 1 Atrio
+lanterna 3 AulaN10
+
+Uscite:
+Atrio nord Biblioteca
+Atrio est AulaN11
+Atrio sud AulaN10
+Atrio ovest LaboratorioCampus
+AulaN11 ovest Atrio
+AulaN10 nord Atrio
+AulaN10 est AulaN11
+AulaN10 ovest LaboratorioCampus
+LaboratorioCampus est Atrio
+LaboratorioCampus ovest AulaN11
+Biblioteca sud Atrio

@@ -1,0 +1,52 @@
+Stanze:
+Atrio
+AulaN10
+AulaN11
+LaboratorioCampus
+Segreteria
+Biblioteca
+
+StanzeBuie:
+Sotterraneo lanterna
+
+StanzeBloccate:
+CorridoioBiblioteca nord piedediporco
+
+StanzeMagiche:
+AulaMagica 2
+
+Estremi:
+Atrio
+Biblioteca
+
+Attrezzi:
+osso 1 Atrio
+lanterna 3 AulaN10
+piedediporco 2 Sotterraneo
+libro 2 Segreteria
+pergamena 1 AulaMagica
+
+Uscite:
+Atrio nord CorridoioBiblioteca
+Atrio est AulaN11
+Atrio sud AulaN10
+Atrio ovest LaboratorioCampus
+CorridoioBiblioteca sud Atrio
+CorridoioBiblioteca nord Biblioteca
+Biblioteca sud CorridoioBiblioteca
+AulaN11 ovest Atrio
+AulaN11 nord Segreteria
+Segreteria sud AulaN11
+AulaN10 nord Atrio
+AulaN10 est AulaN11
+AulaN10 ovest LaboratorioCampus
+AulaN10 sud Sotterraneo
+Sotterraneo nord AulaN10
+LaboratorioCampus est Atrio
+LaboratorioCampus sud AulaMagica
+AulaMagica nord LaboratorioCampus
+
+Personaggi:
+cane Rex Atrio
+strega Morgana Segreteria
+mago Merlino AulaMagica

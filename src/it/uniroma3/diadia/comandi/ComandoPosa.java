@@ -28,17 +28,17 @@ public class ComandoPosa extends AbstractComando {
 	@Override
 	public void esegui(Partita partita) {
 		if(this.parametro==null)
-			partita.getIO().mostraMessaggio("Quale attrezzo vuoi posare ?");
+			this.getIO(partita).mostraMessaggio("Quale attrezzo vuoi posare ?");
 		else {
 			Attrezzo attrezzo=partita.getBorsa().getAttrezzo(this.parametro);
 			if(attrezzo!=null) {
 				if(partita.getStanzaCorrente().addAttrezzo(attrezzo)) {
 					partita.getBorsa().removeAttrezzo(parametro);
-					partita.getIO().mostraMessaggio("Attrezzo posato nella stanza !");
+					this.getIO(partita).mostraMessaggio("Attrezzo posato nella stanza !");
 				}else
-					partita.getIO().mostraMessaggio("Capienza stanza raggiunta,impossibile aggiungere l'attrezzo !");
+					this.getIO(partita).mostraMessaggio("Capienza stanza raggiunta,impossibile aggiungere l'attrezzo !");
 			}else
-				partita.getIO().mostraMessaggio("Attrezzo non presente nella borsa !");
+				this.getIO(partita).mostraMessaggio("Attrezzo non presente nella borsa !");
 		}
 		//inputOutput.mostraMessaggio(partita.getStanzaCorrente().getDescrizione());
 	

@@ -16,7 +16,7 @@ public class ComandoSaluta extends AbstractComando {
 			this.messaggio = personaggio.saluta();
 		else
 			this.messaggio = MESSAGGIO_A_CHI;
-		partita.getIO().mostraMessaggio(this.messaggio);
+		this.getIO(partita).mostraMessaggio(this.messaggio);
 	}
 
 	public String getMessaggio() {
