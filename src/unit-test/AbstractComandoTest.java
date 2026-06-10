@@ -1,5 +1,7 @@
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Set;
+
 import org.junit.jupiter.api.Test;
 
 import it.uniroma3.diadia.Partita;
@@ -39,5 +41,18 @@ class AbstractComandoTest {
         c.setParametro("primo");
         c.setParametro("secondo");
         assertEquals("secondo", c.getParametro());
+    }
+
+    @Test
+    void abstractComando_elencoComandiCompletoSenzaIstanziarli() {
+        Set<String> nomi = AbstractComando.getNomiComandiDisponibili();
+        assertTrue(nomi.containsAll(Set.of("aiuto", "vai", "prendi", "posa",
+                "guarda", "fine", "saluta", "interagisci", "regala")),
+                "elenco incompleto: " + nomi);
+    }
+
+    @Test
+    void abstractComando_elencoNonContieneComandoNonValido() {
+        assertFalse(AbstractComando.getNomiComandiDisponibili().contains("nonValido"));
     }
 }
