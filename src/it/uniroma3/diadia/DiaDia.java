@@ -1,15 +1,11 @@
 package it.uniroma3.diadia;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.util.Scanner;
 
-import it.uniroma3.diadia.ambienti.CaricatoreLabirinto;
 import it.uniroma3.diadia.ambienti.Labirinto;
 import it.uniroma3.diadia.comandi.Comando;
 import it.uniroma3.diadia.comandi.FabbricaDiComandi;
+import it.uniroma3.diadia.comandi.FabbricaDiComandiFisarmonica;
 import it.uniroma3.diadia.comandi.FabbricaDiComandiRiflessiva;
 
 /**
@@ -35,9 +31,8 @@ public class DiaDia {
 			"puoi raccoglierli, usarli, posarli quando ti sembrano inutili\n" +
 			"o regalarli se pensi che possano ingraziarti qualcuno.\n\n"+
 			"Per conoscere le istruzioni usa il comando 'aiuto'.";
-
-	/** Nome logico (risorsa nel classpath) della specifica del labirinto. */
-	static final private String FILE_LABIRINTO = "labirinto-universita.txt";
+	
+	static final private String[] elencoComandi = {"vai", "aiuto", "fine", "prendi", "posa"};
 
 	private Partita partita;
 	private Labirinto labirinto;
@@ -83,29 +78,12 @@ public class DiaDia {
 		return this.partita.isFinita();
 	}
 
-	/**
-	 * Es.15: il labirinto del gioco viene letto dalla specifica testuale
-	 * {@value #FILE_LABIRINTO}, cercata per nome logico nel classpath
-	 * (quindi anche dentro il jar). In sua assenza si ripiega sul
-	 * labirinto cablato di default.
-	 */
-	private static Labirinto caricaLabirintoUniversita() {
-		InputStream spec = DiaDia.class.getClassLoader().getResourceAsStream(FILE_LABIRINTO);
-		if (spec == null)
-			return Labirinto.creaLabirintoDiDefault();
-		try (Reader reader = new InputStreamReader(spec)) {
-			return new CaricatoreLabirinto(reader).carica();
-		} catch (IOException e) {
-			return Labirinto.creaLabirintoDiDefault();
-		}
-	}
-
 	public static void main(String[] argc) {
 		// Lo Scanner su System.in vive per tutta la partita e viene chiuso
 		// una sola volta, qui, all'uscita del try-with-resources.
 		try (Scanner scanner = new Scanner(System.in)) {
 			IO io = new IOConsole(scanner);
-			DiaDia gioco = new DiaDia(caricaLabirintoUniversita(), io);
+			DiaDia gioco = new DiaDia(io);
 			gioco.gioca();
 		}
 	}
